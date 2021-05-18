@@ -1,0 +1,119 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Andale Mono';
+}
+html{
+    scroll-behavior: smooth;
+}
+
+:root{
+    --button-color:#5499C7;
+    --background-color:#dddddd;
+    --text-color-black: black;
+    --text-color-white: white;
+}
+.container{
+    width: 100%;
+}
+a{
+    text-decoration: none;
+}
+main{
+    min-height: 600px;
+}
+/* Welcome */
+.welcome{
+    background: var(--background-color);
+    padding-top: 50px;
+    padding-bottom: 30px;
+    margin-bottom: 50px;
+}
+.welcome-items{
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.welcome-block{
+    width: 350px;
+    
+    
+}
+.welcome-title{
+    font-family: 'Zapf Chancery';
+
+    color:var(--text-color);
+    margin-bottom: 20px;
+}
+.welcome-text{
+font-family: 'Andale Mono';
+   font-size: 18px;
+   margin-bottom: 20px;
+   color:var(--text-color);
+
+}
+
+
+/* iMAGE iNPUT  */
+.image-items{
+    margin-left: auto;
+    margin-right: auto;
+    /* border: 1px solid green; */
+    padding:10px;
+    width: 1200px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.image-item{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    /* border: 1px solid red; */
+    width: 500px;
+    height: 300px;
+    margin-bottom: 50px;    
+
+}
+.image-preview{
+    border: 1px solid black;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 5px;
+    overflow: hidden;
+    border: 2px solid #dddddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color:var(--text-color);
+}
+.input-img, .output-img{
+    width: 100%;
+    display: none;
+}
+
+input[type=file]{
+    height: 30px;
+    /* border: 2px solid red; */
+}
+
+.app-button{
+    width: 100px;
+    padding: 10px;
+    background-color: var(--button-color);    
+    color: var(--text-color-white);
+    text-align: center;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    cursor: pointer;
+    opacity: 0.95;
+}
+.app-button:hover{
+    opacity: 1;
+}

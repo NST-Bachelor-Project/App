@@ -1,0 +1,31 @@
+header{
+    /* border: 1px solid black; */
+    width: 100%;
+    /* background: #0099ff; */
+    background: var(--background-color);
+}
+.header-items{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px 10px 20px;
+}
+.home{
+    font-style: oblique;
+    font-size: 25px;
+    color:var(--text-color-black);
+}
+/* #login{
+    width: 100px;
+    padding: 10px;
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    outline: none;
+    border-radius: 5%;
+    cursor: pointer;
+    opacity: 0.8;
+}
+#login:hover{
+    opacity: 1;
+} */

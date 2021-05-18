@@ -1,0 +1,38 @@
+{
+  "name": "nst",
+  "version": "1.0.0",
+  "description": "Bachelor Project - NST",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "watch": "webpack --watch --progress"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NST-Bachelor-Project/App.git"
+  },
+  "keywords": [
+    "Bachelor",
+    "Neural",
+    "Style",
+    "Transfer"
+  ],
+  "author": "Giorgi Kalandadze, Demetre Uridia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NST-Bachelor-Project/App/issues"
+  },
+  "homepage": "https://github.com/NST-Bachelor-Project/App#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "lit-html": "^1.4.1",
+    "mongodb": "^3.6.9",
+    "navigo": "^8.11.1"
+  },
+  "devDependencies": {
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.2"
+  }
+}
