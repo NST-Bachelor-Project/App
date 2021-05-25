@@ -30,6 +30,16 @@ for(let i = 0; i < imageInputs.length; i++){
     });
 }
 
-document.getElementById('login').addEventListener('click', (event) => {
-    router.navigate('/Login');
+const signOut = document.getElementById('sign-out');
+signOut.addEventListener('click', (event) => {
+    //TMP SOS!!
+    console.log(localStorage.getItem('username'));
+    console.log(localStorage.getItem('username') === undefined);
+    if(localStorage.getItem('username') === 'undefined'){
+        return;
+    }
+    localStorage.setItem('username', undefined);
+    document.getElementById('login').innerText = 'Login';
+    document.getElementById('login').href = `/Sign`;
+    router.navigate('/');
 });

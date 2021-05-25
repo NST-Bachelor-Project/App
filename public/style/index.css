@@ -103,7 +103,6 @@ input[type=file]{
 }
 
 .app-button{
-    width: 100px;
     padding: 10px;
     background-color: var(--button-color);    
     color: var(--text-color-white);

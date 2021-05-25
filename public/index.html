@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="./style/index.css">
   <link rel="stylesheet" href="./style/header.css">
   <link rel="stylesheet" href="./style/footer.css">
-  <link rel="stylesheet" href="./style/login.css">
+  <link rel="stylesheet" href="./style/sign.css">
   <title>NST</title>
 </head>
 <body>
@@ -16,7 +16,10 @@
     <div class="container">
       <div class="header-items">
         <a href="/" data-navigo><p class="home">NST</p></a>
-        <a href="/Login" data-navigo class="app-button" id="login">Login</a>
+        <div class="dropdown">
+          <a href="/Sign" data-navigo class="app-button" id="login">Login</a>
+          <button class="dropdown-content app-button" id="sign-out">Sign Out</button>
+        </div>
       </div>
     </div>
   </header>

@@ -15,17 +15,18 @@ header{
     font-size: 25px;
     color:var(--text-color-black);
 }
-/* #login{
-    width: 100px;
-    padding: 10px;
-    background-color: var(--button-color);
-    color: white;
-    border: none;
-    outline: none;
-    border-radius: 5%;
-    cursor: pointer;
-    opacity: 0.8;
+.dropdown {
+    position: relative;
 }
-#login:hover{
-    opacity: 1;
-} */
+#login{
+    display: block;
+    width: 120px;
+}
+.dropdown-content {
+    width: 120px;
+    position: absolute;
+    display: none;
+}
+.dropdown:hover .dropdown-content {
+    display: block;
+}

@@ -1,0 +1,80 @@
+.login-section{
+    margin-top: 50px;
+}
+.login-items{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.login-background{
+    width: 500px;
+    height: 400px;
+    background-image: url('../image/login.png');
+    background-position: center; 
+    background-size: cover; 
+}
+.sign-form{
+    /* padding: 30px; */
+    width: 300px;
+    height: 300px;
+}
+.sign-navigation{
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+.sign-title{
+    padding:5px;
+    font-size: 17px;
+    text-align: center;
+    width: 100px;
+    border-radius: 20px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    
+}
+.chosen{
+    background-color: var(--button-color);
+    transition: background-color .5s;
+}
+.form-changer{
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    
+    height: 100%;
+}
+.login-form, .register-form{
+    margin-right: 5px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    transition: left 0.3s ease;
+}
+.sign-input{
+    width: 100%;
+    border-radius: 20px;
+    padding: 12px;
+    font-size: 14px;
+    background-color: #dddddd;
+    margin-bottom: 25px;
+    border:none;
+    outline: none;
+}
+#sign-in{
+    width: 100%;
+    border-radius: 20px;
+}
+.login-form{
+    left: 0%;
+    position: absolute;
+
+}
+.register-form{
+    left: 100%;
+    position: absolute;
+    /* display: none; */
+}

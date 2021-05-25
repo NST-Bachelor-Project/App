@@ -1,6 +1,6 @@
 import {html, render} from 'lit-html';
 import { homeTemplate } from '../page/home';
-import {loginTemplate} from '../page/login'
+import {signTemplate} from '../page/sign'
 import { profileTemplate } from '../page/profile';
 
 const Navigo = require('navigo');
@@ -14,18 +14,20 @@ router.on({
     '/Home': () =>{    
         console.log('Home');
     },
-    '/Login': () =>{  
-        console.log('Login');  
-        render(loginTemplate, document.querySelector('main'));
+    '/Sign': () =>{  
+        console.log('Sign');  
+        render(signTemplate, document.querySelector('main'));
     },
     '/Profile/:username': (params) => {
         if(localStorage.getItem('username') != params.data.username){
+            router.navigate('/');
             return;
         }
         render(profileTemplate(params.data.username), document.querySelector('main'));
+        document.getElementById('login').innerText = localStorage.getItem('username');
+        document.getElementById('login').href = `/Profile/${localStorage.getItem('username')}`;
     },
     '*' : (params) => {
-        console.log('*');
     }
 });
 

@@ -27,7 +27,7 @@ MongoClient.connect(Config.options.dbURL,{          //Setup MongoClient
 app.listen(Config.options.port, () => {
     console.log(`Search app listening on port ${Config.options.port}!`);
 });
-app.post('/LoginCheck',  (req, res) => {
+app.post('/Login',  (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
     const answer = DBManager.getUser(username);
@@ -42,6 +42,23 @@ app.post('/LoginCheck',  (req, res) => {
         }
         res.json({status: status});
     })  
+});
+app.get('/Register', (req, res) => {
+    const username = req.query.username;
+    const answer = DBManager.getUser(username);
+    answer.then((user) => {
+        let status = "";
+        if(user === null){
+            status = "Nonexistent";
+        } else{
+            status = "Existent";
+        }
+        console.log('Returned');
+        res.json({status: status});
+    })
+});
+app.post('/Register', (req, res) => {
+    console.log(req.body);
 });
 app.get('/',  (req, res) => {    
     res.sendFile(path.join(__dirname, './public', 'index.html'));
