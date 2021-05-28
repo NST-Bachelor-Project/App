@@ -20,8 +20,8 @@ MongoClient.connect(Config.options.dbURL,{          //Setup MongoClient
             return;
         }
         Connection.set(client.db(Config.options.dataBaseName)); //Set Connection
-        // DBManager.addUser({username:'admin', password:'admin', firstName:"Admin", secondName:"Admin", image:"", catalog:[]});
-   
+        // DBManager.addUser({username:'admin3', password:'admin3', firstName:"Admin3", secondName:"Admin3", image:"", catalog:[]});
+       
 });
 
 app.listen(Config.options.port, () => {
@@ -53,12 +53,18 @@ app.get('/Register', (req, res) => {
         } else{
             status = "Existent";
         }
-        console.log('Returned');
         res.json({status: status});
     })
 });
 app.post('/Register', (req, res) => {
-    console.log(req.body);
+    const username = req.body.username;
+    const password = req.body.password;
+    const firstName = req.body.firstName;
+    const secondName = req.body.secondName;
+    const image = "";
+    const catalog = [];
+    DBManager.addUser({username:username, password:password, firstName:firstName, secondName:secondName, image:image, catalog:catalog});
+    res.json({status:'ok'});
 });
 app.get('/',  (req, res) => {    
     res.sendFile(path.join(__dirname, './public', 'index.html'));

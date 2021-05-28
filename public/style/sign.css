@@ -15,8 +15,10 @@
 }
 .sign-form{
     /* padding: 30px; */
-    width: 300px;
-    height: 300px;
+    width: 320px;
+    height: 350px;
+    padding-right: 20px;
+    padding-left: 20px;
 }
 .sign-navigation{
     
@@ -39,6 +41,7 @@
 .chosen{
     background-color: var(--button-color);
     transition: background-color .5s;
+    color: white;
 }
 .form-changer{
     display: flex;
@@ -48,6 +51,7 @@
     height: 100%;
 }
 .login-form, .register-form{
+    padding: 10px;
     margin-right: 5px;
     display: flex;
     flex-direction: column;
@@ -68,6 +72,9 @@
     width: 100%;
     border-radius: 20px;
 }
+.sign-input{
+    
+}
 .login-form{
     left: 0%;
     position: absolute;
@@ -77,4 +84,39 @@
     left: 100%;
     position: absolute;
     /* display: none; */
+
+   
+}
+
+.username-box, .password-box{
+    position: relative;
+}
+.fa-check, .fa-times{
+    position: absolute;
+    right: 17px;
+    top: 12px;
+    visibility: hidden;
+}
+.fa-check{
+    color: green;
+}
+.fa-times{
+    color: red;
+}
+.fa-eye, .fa-eye-slash{
+    cursor: pointer;
+    position: absolute;
+    right: 17px;
+    top: 12px;
+    display: none;
+}
+.fa-eye-slash{
+    display: block;
+}
+
+#sign-alert{
+    margin-top: 10px;
+    text-align: center;
+    color: red;
+    font-size: 15px;
 }

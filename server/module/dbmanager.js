@@ -5,7 +5,8 @@ class DBManager{
         return (Connection.db.collection('users')).findOne({username: username}, {fields: {username:1, password:1}});
     }
     static addUser(data){
-        const newUser = {username: data.username, password: data.password, firstName: data.firstName, secondName: data.secondName};
+        const newUser = {username: data.username, password: data.password, firstName: data.firstName, secondName: data.secondName, image:data.image, catalog:data.catalog};
+        
         Connection.db.collection('users').insertOne(newUser, (err, res) => {
             if(err){
                 console.error(err);
@@ -14,5 +15,7 @@ class DBManager{
             console.log(`Inserted - ${data.username}`);
         });
     }
+
+    
 }
 module.exports = DBManager;

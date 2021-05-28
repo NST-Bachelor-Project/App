@@ -8,14 +8,14 @@ export const router = new Navigo('/', { hash: true });
 
 router.on({
     '/':  () =>  {    
-        console.log('/');
+        console.log('/ Page');
         render(homeTemplate, document.querySelector('main'));
     },
     '/Home': () =>{    
-        console.log('Home');
+        console.log('Home Page');
     },
     '/Sign': () =>{  
-        console.log('Sign');  
+        console.log('Sign Page');  
         render(signTemplate, document.querySelector('main'));
     },
     '/Profile/:username': (params) => {
