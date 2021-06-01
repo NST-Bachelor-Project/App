@@ -56,6 +56,19 @@ app.get('/Register', (req, res) => {
         res.json({status: status});
     })
 });
+app.get('/Profile', (req, res) => {
+    const answer = DBManager.getProfile(req.query.username);
+    answer.then((user) => {
+        let status = "";
+        if(user === null){
+            status = "Nonexistent";
+            res.json({status: status});
+        } else{
+            status = "Existent";
+            res.json({status: status, user:user});
+        }
+    })
+});
 app.post('/Register', (req, res) => {
     const username = req.body.username;
     const password = req.body.password;

@@ -4,6 +4,9 @@ class DBManager{
     static getUser(username){
         return (Connection.db.collection('users')).findOne({username: username}, {fields: {username:1, password:1}});
     }
+    static getProfile(username){
+        return (Connection.db.collection('users')).findOne({username: username});
+    }
     static addUser(data){
         const newUser = {username: data.username, password: data.password, firstName: data.firstName, secondName: data.secondName, image:data.image, catalog:data.catalog};
         
