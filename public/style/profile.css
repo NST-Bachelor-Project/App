@@ -1,20 +1,27 @@
+.profile-section{
+    background: #f1f1f1;
+}
 .profile-items{
     width: 100%;
-    padding: 30px;
+    padding: 15px;
     display: flex;
     
 }
-
+.info-container, .catalog{
+    box-shadow: 5px 10px 8px #888888;
+    background:white;
+}
 .info-container{
-    width: 250px;
+    width: 25%;
     display: flex;
     flex-direction: column;
-    margin-right: 50px;
+    margin-right: 25px;
 }
 .profile-picture{
     width: 100%;
     height: 250px;
     background-size: cover; /* Resize the background image to cover the entire container */
+    background-position: center;
 
 }
 .fullName{
@@ -22,29 +29,79 @@
     display: flex;
 }
 .profile-name{
-    
     margin-right: 5px;
 }
 
 .catalog{
-    width: 100%;
     display: flex;
     flex-direction: column;
+    overflow-y: scroll;
+    width: 70%;
+    height: 600px;
 }
 .row:first-child{
     padding-top: 0px;
 }
 .row{
-    padding-top: 25px;
-    padding-bottom: 25px;
     display: flex;
-    border-bottom: 1px solid gray;
+    margin-bottom: 15px;
+    width: 100%;
+    
 }
 .row-picture{
-    width: 256px;
-    height: 256px;
-    background-size: cover; /* Resize the background image to cover the entire container */
-    margin-right: 20px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    width: 32%;
+    height: auto;
+    /* height: 250px; */
+    margin-right: 15px;
 
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
+.row-picture:last-child{
+    margin-right: 0px;
+}
+/* 
+
+@media only screen and (max-width: 1250px) {
+    .row-picture{
+        width: 256px;
+        height: 256px;
+    }
+    .info-container{
+        width: 250px;
+    }
+}
+
+@media only screen and (max-width: 1150px) {
+    .row-picture{
+        width: 210px;
+        height: 210px;
+    }
+    .info-container{
+        width: 220px;
+    }
+}
+*/
+@media only screen and (max-width: 1150px) {
+    .row-picture{
+        width: 31%;
+    }
+}
+@media only screen and (max-width: 950px) {
+    .profile-items{
+        flex-direction: column;
+        align-items: center;
+        
+    }
+    .catalog{
+        width: 100%;
+    }
+    .info-container{   
+        width: 500px;
+        height: auto;
+        margin-bottom: 30px;
+    }
+    .profile-picture{
+
+        height: 300px;
+    }
+} 

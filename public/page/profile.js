@@ -21,12 +21,13 @@ export const profileTemplate = (user) =>  html`
             </div>
             <div class="catalog">
             ${(user.catalog).map((item) => {
-                console.log(item);
                 return html`
                 <div class="row">
-                    <div class="row-picture" style="background-image: url(${item.content});"></div>
-                    <div class="row-picture" style="background-image: url(${item.style});"></div>
-                    <div class="row-picture" style="background-image: url(${item.result});"></div>
+                    <img src="${item.content}" class="row-picture" width="256" height="256">
+                    <img src="${item.style}" class="row-picture" width="256" height="256">
+                    <img src="${item.result}" class="row-picture" width="256" height="256">
+
+
                 </div>`
             })}
             
@@ -35,7 +36,9 @@ export const profileTemplate = (user) =>  html`
     </div>
 </section>
 `;
-
+// <div class="row-picture" style="background-image: url(${item.content});"></div>
+                    // <div class="row-picture" style="background-image: url(${item.style});"></div>
+                    // <div class="row-picture" style="background-image: url(${item.result});"></div>
 
 const _onUpload = {
     handleEvent(event){

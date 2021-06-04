@@ -9,6 +9,7 @@ import {router} from './routing.js'
 
 const imageInputs = document.querySelectorAll('.image-input');
 const jsonTuple = {content:"", style:""};
+export const tmpTuple = {content:"", style:"", result:""};
 for(let i = 0; i < imageInputs.length; i++){
     imageInputs[i].addEventListener('change', (event)=>{
         const image = document.querySelectorAll('.input-img')[i];
@@ -20,15 +21,20 @@ for(let i = 0; i < imageInputs.length; i++){
         reader.addEventListener("load", (event) => {
             image.setAttribute('src', event.target.result);
             if(i == 0){
-                jsonTuple.content = event.target.result.substring(22);
+                // jsonTuple.content = event.target.result.substring(22);
+                tmpTuple.content = event.target.result;
             } else if(i == 1){
-                jsonTuple.style = event.target.result.substring(22);
-                
+                // jsonTuple.style = event.target.result.substring(22);
+                tmpTuple.style = event.target.result;
+            } else if(i === 2){
+                tmpTuple.result = event.target.result;
+
             }
         });
         reader.readAsDataURL(file);
     });
 }
+
 
 const signOut = document.getElementById('sign-out');
 signOut.addEventListener('click', (event) => {

@@ -18,6 +18,15 @@ class DBManager{
             console.log(`Inserted - ${data.username}`);
         });
     }
+    static addCatalog(username, catalog){
+        (Connection.db.collection('users')).update({username:username}, {$push: {catalog:catalog}}, (err, res) => {
+            if(err){
+                console.error(err);
+                return;
+            }
+            console.log(`Catalog added - ${username}`);
+        });
+    }
 
     
 }

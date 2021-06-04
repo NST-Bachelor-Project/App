@@ -1,14 +1,16 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const jsonParser = bodyParser.json();
+const jsonParser = bodyParser.json({limit:1024*1024*20, type:'application/json'});
+const urlencodedParser = bodyParser.urlencoded({ extended:true,limit:1024*1024*20,type:'application/x-www-form-urlencoded' })
+
 const Connection = require('./server/common/connection');
 const DBManager = require('./server/module/dbmanager');
 const Config = require('./server/common/config');
 const path = require('path');
-app.use(jsonParser) 
 app.use(express.static(__dirname + '/public'));
-
+app.use(jsonParser);
+app.use(urlencodedParser);
 
 const MongoClient = require('mongodb').MongoClient;
 MongoClient.connect(Config.options.dbURL,{          //Setup MongoClient
@@ -78,6 +80,10 @@ app.post('/Register', (req, res) => {
     const catalog = [];
     DBManager.addUser({username:username, password:password, firstName:firstName, secondName:secondName, image:image, catalog:catalog});
     res.json({status:'ok'});
+});
+app.post('/AddCatalog', (req, res) => {
+    DBManager.addCatalog(req.body.username, req.body.catalog);
+    res.json({status: 'ok'});
 });
 app.get('/',  (req, res) => {    
     res.sendFile(path.join(__dirname, './public', 'index.html'));

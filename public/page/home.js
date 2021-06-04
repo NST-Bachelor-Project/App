@@ -1,21 +1,33 @@
 import {html, render} from 'lit-html';
-
+import {tmpTuple} from '../script/index'
 
 const _onGenerate = {
-  handleEvent(e) { 
-    fetch('http://nst-env-2.eba-pgung23m.us-east-1.elasticbeanstalk.com/', {
+  // handleEvent(e) { 
+  //   fetch('http://nst-env-2.eba-pgung23m.us-east-1.elasticbeanstalk.com/', {
+  //     method: 'POST',
+  //     headers: {'Content-Type': 'application/json'},
+  //     body: JSON.stringify(jsonTuple)
+  //   }).then((response) => response.json())
+  //   .then((data) => {
+  //       console.log('VASHA');
+  //       document.querySelector('.output-img').setAttribute('src', data.image);
+  //       document.querySelector('.output-img').style.display = "block";
+  //       document.querySelectorAll('.preview-text')[3].style.display = "none";
+  //   }).catch((err) => console.log(err));
+  // },
+  handleEvent(e){
+    fetch('/AddCatalog', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(jsonTuple)
-    }).then((response) => response.json())
-    .then((data) => {
-        console.log('VASHA');
-        document.querySelector('.output-img').setAttribute('src', data.image);
-        document.querySelector('.output-img').style.display = "block";
-        document.querySelectorAll('.preview-text')[3].style.display = "none";
+        headers: {'Content-Type': 'application/json'},
+        
+        body: JSON.stringify({username:localStorage.getItem('username'), catalog: tmpTuple})
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      console.log(data.status);
+      
     }).catch((err) => console.log(err));
-  },
- 
+  }
 };
 
 
@@ -53,9 +65,10 @@ export const homeTemplate = html `
           </div>
           <div class="image-item">
             <div class="image-preview" >
-              <img src="" alt="Result" class="output-img">
+              <img src="" alt="Result" class="input-img">
               <p class="preview-text">Result</p>
             </div>
+            <input class="image-input" type="file" name="result-input" id="result-input"> 
             <button @click=${_onGenerate}class="app-button" id="generate">Generate</button>
           </div>
         </div>
