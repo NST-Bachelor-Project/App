@@ -22,7 +22,7 @@ MongoClient.connect(Config.options.dbURL,{          //Setup MongoClient
             return;
         }
         Connection.set(client.db(Config.options.dataBaseName)); //Set Connection
-        // DBManager.addUser({username:'admin3', password:'admin3', firstName:"Admin3", secondName:"Admin3", image:"", catalog:[]});
+        // DBManager.addUser({username:'admin', password:'admin', firstName:"Admin", secondName:"Adminishvili", image:"", catalog:[]});
        
 });
 
@@ -59,17 +59,41 @@ app.get('/Register', (req, res) => {
     })
 });
 app.get('/Profile', (req, res) => {
-    const answer = DBManager.getProfile(req.query.username);
+    const answer = DBManager.getProfile(req.query.username, 0, 3);
+    answer.then((user) => {
+        let status ="";
+        if(user === null){
+            status = "Nonexistent";
+            res.json({status: status});
+        } else {
+            status = "Existent";
+            res.json({status: status, user:user});
+        }
+    }); 
+});
+app.get('/Profile/Edit', (req, res) => {
+    const answer = DBManager.getUser(username);
     answer.then((user) => {
         let status = "";
         if(user === null){
             status = "Nonexistent";
-            res.json({status: status});
-        } else{
-            status = "Existent";
-            res.json({status: status, user:user});
+        } else {
+            status = "Successful";
         }
-    })
+        res.json({status: status});
+    }); 
+});
+app.post('/ProfileInfoChange', (req, res) => {
+    DBManager.updateUser(req.body.username, req.body.password, req.body.firstName, req.body.secondName);
+    if(req.body.image != undefined){
+        DBManager.addAvatar(req.body.username, req.body.image);
+        
+    } 
+    res.json({status: 'ok'}); //SOS sometimes faster ok response and avatar doesnt change
+    
+});
+app.post('/LoadCatalog', (req, res) =>  {
+
 });
 app.post('/Register', (req, res) => {
     const username = req.body.username;
@@ -85,6 +109,7 @@ app.post('/AddCatalog', (req, res) => {
     DBManager.addCatalog(req.body.username, req.body.catalog);
     res.json({status: 'ok'});
 });
+
 app.get('/',  (req, res) => {    
     res.sendFile(path.join(__dirname, './public', 'index.html'));
 });

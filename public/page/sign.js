@@ -72,7 +72,7 @@ const _onUsernameChange = {
         debounce(username);
     }
 }
-function validateRegistration(username, password, firstName, secondName){
+export function validateRegistration(username, password, firstName, secondName){
     if(username.length < 1 || password.length < 1 || firstName.length < 1 || secondName.length < 1){
         return false;
     }

@@ -19,6 +19,7 @@ for(let i = 0; i < imageInputs.length; i++){
         previewText.style.display = "none";
         image.style.display = "block";
         reader.addEventListener("load", (event) => {
+            
             image.setAttribute('src', event.target.result);
             if(i == 0){
                 // jsonTuple.content = event.target.result.substring(22);
@@ -39,8 +40,6 @@ for(let i = 0; i < imageInputs.length; i++){
 const signOut = document.getElementById('sign-out');
 signOut.addEventListener('click', (event) => {
     //TMP SOS!!
-    console.log(localStorage.getItem('username'));
-    console.log(localStorage.getItem('username') === undefined);
     if(localStorage.getItem('username') === 'undefined'){
         return;
     }
