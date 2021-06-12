@@ -1,6 +1,8 @@
 import {html, render} from 'lit-html';
 import {tmpTuple} from '../script/index'
 
+
+
 const _onGenerate = {
   // handleEvent(e) { 
   //   fetch('http://nst-env-2.eba-pgung23m.us-east-1.elasticbeanstalk.com/', {
@@ -30,6 +32,19 @@ const _onGenerate = {
   }
 };
 
+const _onScrollToGenerate = {
+  handleEvent(event) {
+    // const welcome = document.querySelector('.welcome');
+    // let interval = setInterval(() => {
+    //   if(window.scrollY >= welcome.scrollHeight){
+    //     clearInterval(interval);
+        
+    //   }
+    //   console.log(window.scrollY);
+    //   window.scrollTo(0, scrollY+=10);
+    // }, 10);
+  }
+}
 
 export const homeTemplate = html `
 <section class="welcome">
@@ -38,7 +53,7 @@ export const homeTemplate = html `
           <div class="welcome-block">
             <h1 class="welcome-title">Neural Style Transfer</h1>
             <p class="welcome-text">Neural style transfer is an optimization technique used to take two images, a content image and a style reference image (such as an artwork by a famous painter) and blend them together so the output image looks like the content image, but “painted” in the style of the style reference image.</p>
-            <a class="app-button">Get Started</a>
+            <a class="app-button" @click=${_onScrollToGenerate}>Get Started</a>
           </div>
           
           <iframe class="welcome-video" width="600" height="350" src="https://www.youtube.com/embed/7UpK6Usjcns?autoplay=1&mute=1&loop=1&playlist=7UpK6Usjcns&controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -46,7 +61,7 @@ export const homeTemplate = html `
       </div>
     </section>
 
-    <section>
+    <section id="generation">
       <div class="container">
         <div class="image-items">
           <div class="image-item">  
@@ -76,3 +91,4 @@ export const homeTemplate = html `
     </section>
     
 `
+

@@ -4,6 +4,12 @@ class DBManager{
     static getUser(username){
         return (Connection.db.collection('users')).findOne({username: username}, {fields: {username:1, password:1}});
     }
+    static findUser(username){
+        const collection = (Connection.db.collection('users'));
+        const regexUsername = new RegExp(username, 'gi');
+        const query = {username:{$regex: regexUsername}};
+        return collection.find(query, {fields:{username:1}});
+    }
     static getProfile(username, offset, limit){
         // return (Connection.db.collection('users')).find({username: username}, {"catalog": {$slice:3}}).toArray();
         return (Connection.db.collection('users')).findOne({username: username});

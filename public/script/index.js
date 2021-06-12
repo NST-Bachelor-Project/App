@@ -48,3 +48,58 @@ signOut.addEventListener('click', (event) => {
     document.getElementById('login').href = `/Sign`;
     router.navigate('/');
 });
+
+document.getElementById('search').addEventListener('input', (event) => {
+    debounce(event.target.value);
+});
+let timer = 0;
+const delay = 1000;
+function debounce(username){
+    if(timer){
+        clearTimeout(timer);
+    }
+    timer = setTimeout(() => {
+        findUser(username);
+    }, delay);
+}
+function findUser(username){
+    if(username.length < 1){
+        return;
+    }
+    fetch('/FindUser?' + new URLSearchParams({
+        username:username
+    })).then(response => response.json()). 
+    then(data => {
+        const dropdown = document.querySelector('.search-dropdown');
+        dropdown.innerHTML = '';
+        if(data.people.length === 0){
+            console.log('No users found');
+        } else {
+            for(let i = 0; i < data.people.length; i++){
+                if(data.people[i].username === localStorage.getItem('username')){
+                    continue;
+                }
+                const searchRow = document.createElement('p');
+                searchRow.className = 'search-row';
+                searchRow.innerText = data.people[i].username;
+                dropdown.appendChild(searchRow);
+                searchRow.addEventListener('click', (event) => {
+                    const username = event.target.innerText;
+                    document.getElementById('search').placeholder = 'Search...';
+                    document.getElementById('search').value = '';
+                    document.querySelector('.search-dropdown').style.visibility = 'hidden';
+                    router.navigate('/Visit/' + username);
+                })
+            }
+            dropdown.style.visibility = 'visible';
+            
+        }
+    }).catch(err => console.error(err));
+}
+//SOS maybe with this
+// document.getElementById('search').addEventListener('blur', (event) => {
+//     console.log('A');
+//     document.getElementById('search').placeholder = 'Search...';
+//     document.getElementById('search').value = '';
+//     document.querySelector('.search-dropdown').style.visibility = 'hidden';
+// });

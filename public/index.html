@@ -16,7 +16,14 @@
   <header>
     <div class="container">
       <div class="header-items">
-        <a href="/" data-navigo><p class="home">NST</p></a>
+        <div class="header-item">
+          <a href="/" data-navigo><p class="home">NST</p></a>
+          <div class="search-container">
+            <input type="text" id="search" placeholder="Search.."  onfocus="this.placeholder=''">
+            <div class="search-dropdown">
+            </div>
+          </div>
+        </div>
         <div class="dropdown">
           <a href="/Sign" data-navigo class="app-button" id="login">Login</a>
           <button class="dropdown-content app-button" id="sign-out">Sign Out</button>

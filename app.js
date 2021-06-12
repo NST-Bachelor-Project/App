@@ -58,6 +58,18 @@ app.get('/Register', (req, res) => {
         res.json({status: status});
     })
 });
+
+app.get('/FindUser', (req, res) => {    
+    const answer = DBManager.findUser(req.query.username);
+    answer.toArray((err, result) => {
+        if(err){
+            console.error(err);
+            return;
+        }
+        res.json({people:result});
+    });
+});
+
 app.get('/Profile', (req, res) => {
     const answer = DBManager.getProfile(req.query.username, 0, 3);
     answer.then((user) => {

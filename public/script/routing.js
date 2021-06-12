@@ -72,9 +72,29 @@ router.on({
             document.getElementById('login').innerText = username;
             document.getElementById('login').href = `/Profile/${username}`;
             
-        }).catch((err) => console.error(err))
+        }).catch((err) => console.error(err)) 
+    },
+    '/Visit/:username': (params) => {
+       
+        const username = params.data.username;
+        fetch('/Profile?' + new URLSearchParams({
+            username: username
+        })).then((response) => response.json()).
+        then((data) => {
+            if(data.status === 'Nonexistent'){
+                document.querySelector('main').innerHTML = 'User not found';
+                return;
+            }
+            // console.log(data.user);
+            render(profileTemplate(data.user), document.querySelector('main'));
+            render(catalogTemplate(data.user), document.querySelector('.profile-item'));
 
-        
+            // render(editProfileTemplate(data.user), document.querySelector('.profile-item'));
+            document.getElementById('edit-profile-btn').style.display = 'none';
+            document.getElementById('login').innerText = localStorage.getItem('username');
+            document.getElementById('login').href = `/Profile/${localStorage.getItem('username')}`;
+            
+        }).catch((err) => console.error(err)) 
     },
     '*' : (params) => {
     }

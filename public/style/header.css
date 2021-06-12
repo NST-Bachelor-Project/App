@@ -10,11 +10,41 @@ header{
     align-items: center;
     padding: 10px 20px 10px 20px;
 }
+.header-item{
+    display: flex;
+    align-items: center;
+}
 .home{
     font-style: oblique;
     font-size: 25px;
     color:var(--text-color-black);
+    margin-right: 10px;
 }
+.search-container{
+    width: 200px;
+    position: relative;
+}
+.search-dropdown{
+    width: 100%;
+    background-color: white;
+    position: absolute;
+    max-height: 150px;
+    overflow-y: scroll;
+    visibility: hidden;
+}
+#search{
+    width: 100%;
+    padding: 5px;
+    outline: none;
+    border:  none;
+    border-radius: 5px;
+}
+.search-row{
+    border: 1px solid black;
+    padding: 3px;
+}
+
+
 .dropdown {
     position: relative;
 }
