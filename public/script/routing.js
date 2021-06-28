@@ -45,9 +45,9 @@ router.on({
             console.log(data);
             render(profileTemplate(data.user), document.querySelector('main'));
             render(catalogTemplate(data.catalog.catalog), document.querySelector('.profile-item'));
-         
-            document.getElementById('edit-profile-btn').style.display = 'block';
             
+            document.getElementById('edit-profile-btn').style.display = 'block';
+            document.querySelector('.fa-sign-out-alt').style.visibility = 'visible';
             document.getElementById('login').innerText = username;
             document.getElementById('login').href = `/Profile/${username}`;
             

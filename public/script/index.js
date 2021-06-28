@@ -47,6 +47,7 @@ signOut.addEventListener('click', (event) => {
         return;
     }
     localStorage.setItem('username', undefined);
+    document.querySelector('.fa-sign-out-alt').style.visibility = 'hidden';
     document.getElementById('login').innerText = 'Login';
     document.getElementById('login').href = `/Sign`;
     router.navigate('/');

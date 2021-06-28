@@ -66,11 +66,20 @@ header{
   
 /*DropDown*/
 .dropdown {
-    position: relative;
+    /* position: relative; */
+    display: flex;
+    align-items: center;
 }
 #login{
-    display: block;
+    /* display: block; */
     width: 120px;
+    margin-right: 10px;
+}
+.fa-sign-out-alt{
+    color: var(--yellow);
+    cursor:pointer;
+    /* display: none; */
+    visibility: hidden;
 }
 .dropdown-content {
     width: 120px;
