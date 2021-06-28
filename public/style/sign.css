@@ -6,13 +6,7 @@
     justify-content: space-evenly;
     align-items: center;
 }
-.login-background{
-    width: 500px;
-    height: 400px;
-    background-image: url('../image/login.png');
-    background-position: center; 
-    background-size: cover; 
-}
+
 .sign-form{
     /* padding: 30px; */
     width: 320px;
@@ -39,8 +33,10 @@
     
 }
 .chosen{
-    background-color: var(--button-color);
-    transition: background-color .5s;
+    background-position:100px;  
+
+    background: var(--button-color);
+    transition: all .5s;
     color: white;
 }
 .form-changer{

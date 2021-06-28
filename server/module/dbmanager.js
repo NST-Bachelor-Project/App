@@ -10,7 +10,7 @@ class DBManager{
         const query = {username:{$regex: regexUsername}};
         return collection.find(query, {fields:{username:1}});
     }
-    static getProfile(username, offset, limit){
+    static getProfile(username){
         // return (Connection.db.collection('users')).find({username: username}, {"catalog": {$slice:3}}).toArray();
         return (Connection.db.collection('users')).findOne({username: username});
     }
@@ -36,6 +36,12 @@ class DBManager{
             }
             console.log(`Catalog added - ${username}`);
         });
+    }
+    static getCatalog(username, offset, limit){
+        // console.log('1');
+        return (Connection.db.collection('users')).find({username:username}, {fields:{catalog:1}});
+        
+        // return (Connection.db.collection('users')).find({}, {catalog:1, catalog:{$slice: [2, 1]}});
     }
     static addAvatar(username, image){
         return (Connection.db.collection('users')).updateOne({username:username}, {$set: {image:image}});

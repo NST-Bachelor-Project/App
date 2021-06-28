@@ -8,33 +8,36 @@
 import {router} from './routing.js'
 
 const imageInputs = document.querySelectorAll('.image-input');
-const jsonTuple = {content:"", style:""};
+export const jsonTuple = {content:"", style:""};
 export const tmpTuple = {content:"", style:"", result:""};
-for(let i = 0; i < imageInputs.length; i++){
-    imageInputs[i].addEventListener('change', (event)=>{
-        const image = document.querySelectorAll('.input-img')[i];
-        const previewText = document.querySelectorAll('.preview-text')[i];
-        const file = event.target.files[0];
-        const reader =  new FileReader(); //Read input file/image as dataURL
-        previewText.style.display = "none";
-        image.style.display = "block";
-        reader.addEventListener("load", (event) => {
+// for(let i = 0; i < imageInputs.length; i++){
+//     imageInputs[i].addEventListener('change', (event)=>{
+//         console.log('CHANGE YES');
+//         const image = document.querySelectorAll('.input-img')[i];
+//         const previewText = document.querySelectorAll('.preview-text')[i];
+//         const file = event.target.files[0];
+//         const reader =  new FileReader(); //Read input file/image as dataURL
+//         previewText.style.display = "none";
+//         image.style.display = "block";
+//         reader.addEventListener("load", (event) => {
             
-            image.setAttribute('src', event.target.result);
-            if(i == 0){
-                // jsonTuple.content = event.target.result.substring(22);
-                tmpTuple.content = event.target.result;
-            } else if(i == 1){
-                // jsonTuple.style = event.target.result.substring(22);
-                tmpTuple.style = event.target.result;
-            } else if(i === 2){
-                tmpTuple.result = event.target.result;
+//             image.setAttribute('src', event.target.result);
+//             if(i == 0){
+//                 jsonTuple.content = event.target.result.substring(22);
+//                 // tmpTuple.content = event.target.result;
+//             } else if(i == 1){
+//                 jsonTuple.style = event.target.result.substring(22);
+//                 // tmpTuple.style = event.target.result;
+//             }
+//                 // } else if(i === 2){
+//             //     tmpTuple.result = event.target.result;
 
-            }
-        });
-        reader.readAsDataURL(file);
-    });
-}
+//             // }
+//         });
+//         reader.readAsDataURL(file);
+//     });
+// }
+
 
 
 const signOut = document.getElementById('sign-out');
@@ -53,7 +56,7 @@ document.getElementById('search').addEventListener('input', (event) => {
     debounce(event.target.value);
 });
 let timer = 0;
-const delay = 1000;
+const delay = 500;
 function debounce(username){
     if(timer){
         clearTimeout(timer);
@@ -97,9 +100,11 @@ function findUser(username){
     }).catch(err => console.error(err));
 }
 //SOS maybe with this
-// document.getElementById('search').addEventListener('blur', (event) => {
-//     console.log('A');
-//     document.getElementById('search').placeholder = 'Search...';
-//     document.getElementById('search').value = '';
-//     document.querySelector('.search-dropdown').style.visibility = 'hidden';
-// });
+document.getElementById('search').addEventListener('blur', (event) => {
+    setTimeout(() => {
+        document.getElementById('search').placeholder = 'Search...';
+        document.getElementById('search').value = '';
+        document.querySelector('.search-dropdown').style.visibility = 'hidden'
+    }, 1000);
+
+});

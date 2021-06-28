@@ -22,7 +22,7 @@ MongoClient.connect(Config.options.dbURL,{          //Setup MongoClient
             return;
         }
         Connection.set(client.db(Config.options.dataBaseName)); //Set Connection
-        // DBManager.addUser({username:'admin', password:'admin', firstName:"Admin", secondName:"Adminishvili", image:"", catalog:[]});
+        // DBManager.addUser({username:'Deme', password:'123', firstName:"Dito", secondName:"Uridia", image:"", catalog:[]});
        
 });
 
@@ -71,17 +71,39 @@ app.get('/FindUser', (req, res) => {
 });
 
 app.get('/Profile', (req, res) => {
-    const answer = DBManager.getProfile(req.query.username, 0, 3);
+    const answer = DBManager.getProfileInfo(req.query.username);
     answer.then((user) => {
-        let status ="";
-        if(user === null){
-            status = "Nonexistent";
-            res.json({status: status});
-        } else {
-            status = "Existent";
-            res.json({status: status, user:user});
-        }
+        const catalog = DBManager.getCatalog(req.query.username, 0, 3);
+
+        catalog.forEach((catalog) => {
+         
+            let status ="";
+            if(user === null){
+                status = "Nonexistent";
+                res.json({status: status});
+            } else {
+                status = "Existent";
+                res.json({status: status, user:user, catalog:catalog});
+            }
+        })
+        
     }); 
+    // const answer = DBManager.getProfile(req.query.username);
+    // answer.then((user) => {
+        
+     
+  
+    //         let status ="";
+    //         if(user === null){
+    //             status = "Nonexistent";
+    //             res.json({status: status});
+    //         } else {
+    //             status = "Existent";
+    //             res.json({status: status, user:user});
+    //         }
+        
+        
+    // });
 });
 app.get('/Profile/Edit', (req, res) => {
     const answer = DBManager.getUser(username);
@@ -101,6 +123,7 @@ app.post('/ProfileInfoChange', (req, res) => {
         DBManager.addAvatar(req.body.username, req.body.image);
         
     } 
+    setTimeout(() => {},2000);
     res.json({status: 'ok'}); //SOS sometimes faster ok response and avatar doesnt change
     
 });

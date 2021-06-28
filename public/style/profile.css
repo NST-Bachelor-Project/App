@@ -18,17 +18,22 @@
     margin-right: 25px;
 }
 .profile-picture{
+    border-radius: 5px;
     width: 100%;
     height: 250px;
     background-size: cover; /* Resize the background image to cover the entire container */
     background-position: center;
     margin-bottom: 10px;
 }
+.user-info{
+    padding-left: 10px;
+}
 .fullName{
     margin-top: 10px;
     display: flex;
 }
 .profile-name{
+
     margin-right: 5px;
 }
 .profile-item{
@@ -59,10 +64,28 @@
 
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
+.image-open{
+    position: absolute;
+    /* animation: scaleUp .2s forwards linear; */
+    transform: scale(3);
+}
+  
+  .row-picture:hover{
+    cursor: pointer;
+  }
+  
+ 
 .row-picture:last-child{
     margin-right: 0px;
 }
+.catalog::-webkit-scrollbar {
+    width: 10px;
+}
 
+/* Handle */
+.catalog::-webkit-scrollbar-thumb {
+    background: var(--header-background-gradient);
+}
 
 /*
 Edit Profile
@@ -70,17 +93,41 @@ Edit Profile
 #edit-profile-btn{
     margin-top: 20px;
 }
+.modal{
+    display: none;
+    height: 0;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: #dddddd; /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    /* opacity: 0; */
+    /* transition: all 2.5s linear; */
+}
 .edit-container{
-    width: 100%;
+    margin: auto;
+    margin-top: 200px;
+    border-radius: 25px;
+    background-color: white;
+    width: 400px;
+    padding: 30px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    
 }
 .edit-row{
+    
+    padding: 5px;
     max-width: 300px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-left: 15px;
+    
     margin-bottom: 10px;
 }
 .edit-field-title{
@@ -95,7 +142,7 @@ Edit Profile
 .edit-password{
     position: relative;
 }
-.edit-password > .fas{
+.edit-password.fas{
     top: 6px;
     right: 10px;
 }
@@ -103,8 +150,19 @@ Edit Profile
     visibility: hidden;
     margin-top: 10px;
     margin-left: 15px;
-    
+    padding-left: 5px;
     font-size: 15px;
+}
+#save-change{
+margin-left: auto;
+margin-right: auto;
+    width: 200px;
+}
+#load-more-catalog{
+    
+    width: 150px;
+    margin: auto;
+    margin-bottom: 10px;
 }
 /* 
 
