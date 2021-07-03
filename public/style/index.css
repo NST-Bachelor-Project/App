@@ -155,6 +155,10 @@ main{
 .app-button:hover{
     /* border: 2px solid var(--my-blue); */
     background: var(--button-color-hover);   
-
-
+}
+.displayed {
+    display: block;
+}
+.none{
+    display: none;
 }

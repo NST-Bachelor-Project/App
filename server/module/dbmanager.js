@@ -38,10 +38,7 @@ class DBManager{
         });
     }
     static getCatalog(username, offset, limit){
-        // console.log('1');
-        return (Connection.db.collection('users')).find({username:username}, {fields:{catalog:1}});
-        
-        // return (Connection.db.collection('users')).find({}, {catalog:1, catalog:{$slice: [2, 1]}});
+        return (Connection.db.collection('users')).find({username:username},{projection:{catalog:{$slice:2}}});
     }
     static addAvatar(username, image){
         return (Connection.db.collection('users')).updateOne({username:username}, {$set: {image:image}});
@@ -56,6 +53,23 @@ class DBManager{
         });
     }
 
+
+    static tmpUpdate(username, avatar){
+        (Connection.db.collection('users')).updateOne({username:username}, {$set: {image:avatar, catalog:[], score : [
+            45,
+            59,
+            75,
+            67,
+            52,
+            72
+    ]}}, (err, res) => {
+            if(err){
+                console.error(err);
+                return;
+            }
+            console.log(`Updated ${username}`);
+        });
+    }
     
 }
 module.exports = DBManager;

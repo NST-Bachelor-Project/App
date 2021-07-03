@@ -63,6 +63,7 @@ export const profileTemplate = (user) =>  html`
 `;
 export const catalogTemplate = (catalog) => html `
     <div class="catalog">
+        <p class="empty-catalog none">No Catalog Yet</p>
         ${(catalog).map((item) => {
             return html`
             <div class="row">
@@ -83,37 +84,39 @@ export const catalogTemplate = (catalog) => html `
 `;
 
 export const editProfileTemplate = (user) => html`
-    <div class="modal">
-        <div class="edit-row">
-            <p class="edit-field-title">Avatar</p>
-            <input @change=${_onUpload} class="edit-input" type="file" name="avatar-input" id="avatar-input">
-        </div>
-        
-        <div class="edit-row">
-            <p class="edit-field-title">Username</p>
-            <input type="text" id="edit-username" class="edit-input" value="${user.username}" 
-                onfocus="this.placeholder=''" onblur="this.placeholder='${user.username}'" disabled/>
-        </div>
-        <div class="edit-row edit-password">
-            <p class="edit-field-title">Password</p>
-            <input type="password" id="edit-password" class="edit-input" value="${user.password}"
-                onfocus="this.placeholder=''" onblur="this.placeholder='${user.password}'"/>
-            <i @click=${_hidePassword} class="fas fa-eye"></i>
-            <i @click=${_showPassword} class="fas fa-eye-slash"></i>
-        </div>
-        <div class="edit-row">
-            <p class="edit-field-title">First Name</p>
-            <input type="text" id="edit-firstName" class="edit-input" value="${user.firstName}"
-                onfocus="this.placeholder=''" onblur="this.placeholder='${user.firstName}'"/>
-        </div>
-        <div class="edit-row">
-            <p class="edit-field-title">Second Name</p>
-            <input type="text" id="edit-secondName" class="edit-input" value="${user.secondName}"
-                onfocus="this.placeholder=''" onblur="this.placeholder='${user.secondName}'"/>
-        </div>
-        <p id="edit-alert">Please fill all fields</p>
-        <button id="save-change" class="app-button"  @click=${_onSave}>Save Changes</button>
-   </div>
+<div class="modal">
+<div class="edit-container">
+    <div class="edit-row">
+        <p class="edit-field-title">Avatar</p>
+        <input @change=${_onUpload} class="edit-input" type="file" name="avatar-input" id="avatar-input">
+    </div>
+    
+    <div class="edit-row">
+        <p class="edit-field-title">Username</p>
+        <input type="text" id="edit-username" class="edit-input" value="${user.username}" 
+            onfocus="this.placeholder=''" onblur="this.placeholder='${user.username}'" disabled/>
+    </div>
+    <div class="edit-row edit-password">
+        <p class="edit-field-title">Password</p>
+        <input type="password" id="edit-password" class="edit-input" value="${user.password}"
+            onfocus="this.placeholder=''" onblur="this.placeholder='${user.password}'"/>
+        <i @click=${_hidePassword} class="fas fa-eye"></i>
+        <i @click=${_showPassword} class="fas fa-eye-slash"></i>
+    </div>
+    <div class="edit-row">
+        <p class="edit-field-title">First Name</p>
+        <input type="text" id="edit-firstName" class="edit-input" value="${user.firstName}"
+            onfocus="this.placeholder=''" onblur="this.placeholder='${user.firstName}'"/>
+    </div>
+    <div class="edit-row">
+        <p class="edit-field-title">Second Name</p>
+        <input type="text" id="edit-secondName" class="edit-input" value="${user.secondName}"
+            onfocus="this.placeholder=''" onblur="this.placeholder='${user.secondName}'"/>
+    </div>
+    <p id="edit-alert">Please fill all fields</p>
+    <button id="save-change" class="app-button"  @click=${_onSave}>Save Changes</button>
+</div>
+</div>
 `
 
 

@@ -12,9 +12,11 @@ router.on({
         if(localStorage.getItem('username') != 'undefined'){
             document.getElementById('login').innerText = localStorage.getItem('username');
             document.getElementById('login').href = `/Profile/${localStorage.getItem('username')}`;
+            document.querySelector('.fa-sign-out-alt').style.visibility = 'visible';
         }
         // console.log('/ Page');
         render(homeTemplate, document.querySelector('main'));
+
     },
     '/Home': () =>{   
         if(localStorage.getItem('username') != 'undefined'){
@@ -38,14 +40,20 @@ router.on({
             username: username
         })).then((response) => response.json()).
         then((data) => {
+           
             if(data.status === 'Nonexistent'){
                 document.querySelector('main').innerHTML = 'User not found';
                 return;
             }
-            console.log(data);
+       
             render(profileTemplate(data.user), document.querySelector('main'));
             render(catalogTemplate(data.catalog.catalog), document.querySelector('.profile-item'));
-            
+            console.log(data.catalog.catalog.length);
+            if(data.catalog.catalog.length < 1){
+                document.querySelector('.empty-catalog').classList.remove('none');
+            } else{
+                document.querySelector('.empty-catalog').classList.add('none');
+            }   
             document.getElementById('edit-profile-btn').style.display = 'block';
             document.querySelector('.fa-sign-out-alt').style.visibility = 'visible';
             document.getElementById('login').innerText = username;
@@ -94,9 +102,21 @@ router.on({
             render(catalogTemplate(data.catalog.catalog), document.querySelector('.profile-item'));
 
             // render(editProfileTemplate(data.user), document.querySelector('.profile-item'));
+            if(data.catalog.catalog.length < 1){
+                document.querySelector('.empty-catalog').classList.remove('none');
+            } else{
+                document.querySelector('.empty-catalog').classList.add('none');
+            }
             document.getElementById('edit-profile-btn').style.display = 'none';
-            document.getElementById('login').innerText = localStorage.getItem('username');
-            document.getElementById('login').href = `/Profile/${localStorage.getItem('username')}`;
+            
+            if(localStorage.getItem('username') != 'undefined'){
+                document.getElementById('login').innerText = localStorage.getItem('username');
+                document.getElementById('login').href = `/Profile/${localStorage.getItem('username')}`;
+                document.querySelector('.fa-sign-out-alt').style.visibility = 'visible';
+      
+            }
+            
+
             
         }).catch((err) => console.error(err)) 
     },

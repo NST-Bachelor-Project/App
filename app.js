@@ -22,8 +22,6 @@ MongoClient.connect(Config.options.dbURL,{          //Setup MongoClient
             return;
         }
         Connection.set(client.db(Config.options.dataBaseName)); //Set Connection
-        // DBManager.addUser({username:'Deme', password:'123', firstName:"Dito", secondName:"Uridia", image:"", catalog:[]});
-       
 });
 
 app.listen(Config.options.port, () => {
@@ -74,7 +72,7 @@ app.get('/Profile', (req, res) => {
     const answer = DBManager.getProfileInfo(req.query.username);
     answer.then((user) => {
         const catalog = DBManager.getCatalog(req.query.username, 0, 3);
-
+        // console.log(catalog);
         catalog.forEach((catalog) => {
          
             let status ="";
@@ -141,7 +139,9 @@ app.post('/Register', (req, res) => {
     res.json({status:'ok'});
 });
 app.post('/AddCatalog', (req, res) => {
+    
     DBManager.addCatalog(req.body.username, req.body.catalog);
+    
     res.json({status: 'ok'});
 });
 

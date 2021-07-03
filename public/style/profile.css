@@ -28,12 +28,19 @@
 .user-info{
     padding-left: 10px;
 }
+.profile-username{
+    color: rgb(24, 23, 23);
+    font-weight: bold;
+    font-style: oblique;
+}
 .fullName{
+    color: rgb(24, 23, 23);
     margin-top: 10px;
     display: flex;
+    font-weight: bold;
 }
 .profile-name{
-
+    
     margin-right: 5px;
 }
 .profile-item{
@@ -80,11 +87,13 @@
 }
 .catalog::-webkit-scrollbar {
     width: 10px;
+   
 }
 
 /* Handle */
 .catalog::-webkit-scrollbar-thumb {
     background: var(--header-background-gradient);
+    border-radius: 10px;
 }
 
 /*
@@ -163,6 +172,13 @@ margin-right: auto;
     width: 150px;
     margin: auto;
     margin-bottom: 10px;
+}
+.empty-catalog{
+    margin: 20px;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--my-blue);
 }
 /* 
 
