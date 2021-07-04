@@ -4,6 +4,7 @@
 .profile-items{
     width: 100%;
     padding: 15px;
+    padding-right: 0px;
     display: flex;
     min-height: 600px;
 }
@@ -15,13 +16,18 @@
     width: 25%;
     display: flex;
     flex-direction: column;
-    margin-right: 25px;
+    margin-right: 20px;
+}
+.picture-container{
+    width: 100%;
 }
 .profile-picture{
     border-radius: 5px;
     width: 100%;
     height: 250px;
     background-size: cover; /* Resize the background image to cover the entire container */
+      background-repeat: no-repeat;
+
     background-position: center;
     margin-bottom: 10px;
 }
@@ -40,12 +46,11 @@
     font-weight: bold;
 }
 .profile-name{
-    
     margin-right: 5px;
 }
 .profile-item{
-    width: 70%;
-
+    width: 75%;
+    margin-right: 10px;
 }
 .catalog{
     display: flex;
@@ -61,30 +66,26 @@
     display: flex;
     margin-bottom: 15px;
     width: 100%;
-    
 }
 .row-picture{
     width: 32%;
     height: auto;
     /* height: 250px; */
     margin-right: 15px;
-
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+.row-picture:last-child{
+    margin-right: 0px;
 }
 .image-open{
     position: absolute;
     /* animation: scaleUp .2s forwards linear; */
     transform: scale(3);
 }
-  
-  .row-picture:hover{
-    cursor: pointer;
-  }
+
   
  
-.row-picture:last-child{
-    margin-right: 0px;
-}
+
 .catalog::-webkit-scrollbar {
     width: 10px;
    
@@ -102,7 +103,7 @@ Edit Profile
 #edit-profile-btn{
     margin-top: 20px;
 }
-.modal{
+.modal, .image-open{
     display: none;
     height: 0;
     position: fixed; /* Stay in place */
@@ -203,7 +204,7 @@ margin-right: auto;
 }
 */
 
-
+/* Responsive */
 @media only screen and (min-height: 800px) {
     .profile-items{
         min-height: 950px;
@@ -218,22 +219,43 @@ margin-right: auto;
         width: 31%;
     }
 }
-@media only screen and (max-width: 950px) {
+@media only screen and (max-width: 1000px) {
     .profile-items{
         flex-direction: column;
-        align-items: center;
-        
+        align-items: center;   
+    }
+    .info-container{  
+        flex-direction: row; 
+        width: 800px;
+        height: auto;
+        margin-bottom: 30px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+    .picture-container{
+        width: 100%;
+        height: 300px;
+    }
+    .profile-picture{
+        height: 100%;
+    }
+    .user-info{
+        padding-top: 30px;
+        padding-left: 15px;
+        width: 300px;
+    }
+    .profile-item{
+        margin-right: auto;
+        margin-left: auto;
+        width: 800px;
     }
     .catalog{
         width: 100%;
-    }
-    .info-container{   
-        width: 500px;
         height: auto;
-        margin-bottom: 30px;
-    }
-    .profile-picture{
-
-        height: 300px;
     }
 } 
+@media only screen and (max-width: 850px) {
+    .info-container, .profile-item{
+        width: 100%;
+    }
+}

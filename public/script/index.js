@@ -47,6 +47,8 @@ signOut.addEventListener('click', (event) => {
         return;
     }
     localStorage.setItem('username', undefined);
+    localStorage.setItem('offset', 0);
+    localStorage.setItem('limit', 0);
     document.querySelector('.fa-sign-out-alt').style.visibility = 'hidden';
     document.getElementById('login').innerText = 'Login';
     document.getElementById('login').href = `/Sign`;
@@ -106,6 +108,6 @@ document.getElementById('search').addEventListener('blur', (event) => {
         document.getElementById('search').placeholder = 'Search...';
         document.getElementById('search').value = '';
         document.querySelector('.search-dropdown').style.visibility = 'hidden'
-    }, 1000);
+    }, 500);
 
 });

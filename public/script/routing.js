@@ -1,7 +1,7 @@
 import {html, render} from 'lit-html';
 import { homeTemplate } from '../page/home';
 import {signTemplate} from '../page/sign'
-import { profileTemplate, catalogTemplate, editProfileTemplate } from '../page/profile';
+import { profileTemplate, catalogTemplate, createNewRow } from '../page/profile';
 
 const Navigo = require('navigo');
 export const router = new Navigo('/', { hash: true });
@@ -36,8 +36,12 @@ router.on({
             return;
         }
         const username = localStorage.getItem('username');
+        localStorage.setItem('offset', 0);
+        localStorage.setItem('limit', 3);
         fetch('/Profile?' + new URLSearchParams({
-            username: username
+            username: username,
+            offset: 0,
+            limit: 3
         })).then((response) => response.json()).
         then((data) => {
            
@@ -45,19 +49,24 @@ router.on({
                 document.querySelector('main').innerHTML = 'User not found';
                 return;
             }
-       
+            // console.log(data.catalog.catalog.length);
             render(profileTemplate(data.user), document.querySelector('main'));
+
             render(catalogTemplate(data.catalog.catalog), document.querySelector('.profile-item'));
-            console.log(data.catalog.catalog.length);
+            
             if(data.catalog.catalog.length < 1){
                 document.querySelector('.empty-catalog').classList.remove('none');
+                document.getElementById('load-more-catalog').classList.add('none');
             } else{
                 document.querySelector('.empty-catalog').classList.add('none');
+                document.getElementById('load-more-catalog').classList.remove('none');
             }   
             document.getElementById('edit-profile-btn').style.display = 'block';
             document.querySelector('.fa-sign-out-alt').style.visibility = 'visible';
             document.getElementById('login').innerText = username;
             document.getElementById('login').href = `/Profile/${username}`;
+
+            // localStorage.setItem('catalog', JSON.stringify(data.catalog.catalog));
             
         }).catch((err) => console.error(err))
 
@@ -87,7 +96,7 @@ router.on({
     //     }).catch((err) => console.error(err)) 
     // },
     '/Visit/:username': (params) => {
-       
+        localStorage.setItem('offset', 0);
         const username = params.data.username;
         fetch('/Profile?' + new URLSearchParams({
             username: username
@@ -99,13 +108,16 @@ router.on({
             }
             // console.log(data.user);
             render(profileTemplate(data.user), document.querySelector('main'));
-            render(catalogTemplate(data.catalog.catalog), document.querySelector('.profile-item'));
-
+            // render(catalogTemplate(data.catalog.catalog), document.querySelector('.profile-item'));
+            document.getElementById('catalog-wrap').innerHTML = '';
+            createNewRow(data.catalog.catalog);
             // render(editProfileTemplate(data.user), document.querySelector('.profile-item'));
             if(data.catalog.catalog.length < 1){
                 document.querySelector('.empty-catalog').classList.remove('none');
+                document.getElementById('load-more-catalog').classList.add('none');
             } else{
                 document.querySelector('.empty-catalog').classList.add('none');
+                document.getElementById('load-more-catalog').classList.remove('none');
             }
             document.getElementById('edit-profile-btn').style.display = 'none';
             

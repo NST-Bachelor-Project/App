@@ -144,6 +144,13 @@ app.post('/AddCatalog', (req, res) => {
     
     res.json({status: 'ok'});
 });
+app.post('/LoadMoreCatalog', (req, res) => {
+    const catalog = DBManager.getCatalog(req.body.username, parseInt(req.body.offset), parseInt(req.body.limit));
+    catalog.forEach((catalog) => {  
+        res.json({catalog:catalog});
+    
+    });
+});
 
 app.get('/',  (req, res) => {    
     res.sendFile(path.join(__dirname, './public', 'index.html'));

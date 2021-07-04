@@ -2,6 +2,7 @@ import {createMarker, html, render} from 'lit-html';
 import { router } from '../script/routing';
 import { validateRegistration } from './sign';
 
+
 export const profileTemplate = (user) =>  html`
 <section class="profile-section">
     <div class="container">
@@ -18,10 +19,18 @@ export const profileTemplate = (user) =>  html`
                         <p class="profile-name">${user.firstName}</p>
                         <p>${user.secondName}</p>
                     </div>
+                    <button id="edit-profile-btn" class="app-button" @click=${_onGoEdit}>Edit Profile</button>
                 </div>
-                <button id="edit-profile-btn" class="app-button" @click=${_onGoEdit}>Edit Profile</button>
+                
             </div>
-            <div class="profile-item"
+            <div class="profile-item">
+                <div class="catalog">
+                    <p class="empty-catalog none">No Catalog Yet</p>
+                    <div id="catalog-wrap">
+                    
+                    </div>
+                    <button id="load-more-catalog" class="app-button" @click=${_onLoadMore}>Load More</button>
+                </div> 
             </div>
            
         </div>
@@ -64,25 +73,43 @@ export const profileTemplate = (user) =>  html`
 export const catalogTemplate = (catalog) => html `
     <div class="catalog">
         <p class="empty-catalog none">No Catalog Yet</p>
+        <div id="catalog-wrap">
         ${(catalog).map((item) => {
             return html`
             <div class="row">
-                
-                <img src="${item.content}" @click=${_onZoom} class="row-picture" width="256" height="256">
+                <img src="${item.content}" class="row-picture" width="256" height="256">
                 <img src="${item.style}" class="row-picture" width="256" height="256">
                 <img src="${item.result}" class="row-picture" width="256" height="256">
-
-
             </div>`
             
         })}
-        <button id="load-more-catalog" class="app-button">Load More</button>
-    </div>
-                
-    
-            
+        </div>
+        <button id="load-more-catalog" class="app-button" @click=${_onLoadMore}>Load More</button>
+    </div>      
 `;
 
+function createRowPicture(src){
+    let img = document.createElement('img');
+    img.setAttribute('src', src);
+    img.className = 'row-picture';
+    img.width = 256;
+    img.height = 256;
+    return img;
+}
+export function createNewRow(newCatalog){
+    for(let i = 0; i < newCatalog.length; i++){
+        let current = newCatalog[i];
+        let row = document.createElement('div');
+        row.className = 'row';
+        let content = createRowPicture(current.content);
+        let style = createRowPicture(current.style);
+        let result = createRowPicture(current.result);
+        row.append(content);
+        row.append(style);
+        row.append(result);
+        document.getElementById('catalog-wrap').append(row);
+    }    
+}
 export const editProfileTemplate = (user) => html`
 <div class="modal">
 <div class="edit-container">
@@ -134,12 +161,7 @@ const _onCatalogScroll = {
         }
     }
 }
-const _onZoom = {
-    handleEvent(event){
-        document.querySelector(".row-image").classList.toggle("image-open");
 
-    }
-}
 
 const _onGoEdit = {
     handleEvent(event){
@@ -211,5 +233,30 @@ const _hidePassword = {
         document.getElementById('edit-password').type = 'password';
         document.querySelector('.fa-eye').style.display = 'none';
         document.querySelector('.fa-eye-slash').style.display = 'block';
+    }
+}
+const _onLoadMore = {
+    handleEvent(e){
+        let arr = window.location.href.split('/');
+        const username = arr.pop();
+        console.log(username);
+        localStorage.setItem('offset', parseInt(localStorage.getItem('offset')) + parseInt(localStorage.getItem('limit')));
+        fetch('/LoadMoreCatalog', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({username: username, offset:localStorage.getItem('offset'), limit:localStorage.getItem('limit')})
+        }).then((response) => response.json())
+        .then((data) => {
+            if(data.catalog.catalog.length < 1){
+                document.getElementById('load-more-catalog').classList.add('none');
+                return;
+            }
+            console.log('EEE', data.catalog.catalog.length)
+            createNewRow(data.catalog.catalog);
+        })
+        .catch((err) => {
+            console.error(err);
+        })
+
     }
 }

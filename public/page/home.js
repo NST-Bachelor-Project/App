@@ -35,10 +35,15 @@ const _onGenerate = {
         document.querySelector('.output-img').setAttribute('src', data.image);
         document.querySelector('.output-img').style.display = "block";
         document.querySelectorAll('.preview-text')[3].style.display = "none";
+        document.getElementById('save').style.display = 'block';
     }).catch((err) => console.log(err));
-  }
+  }   
 };
+const _onSaveRow = {
+  handleEvent(event){
 
+  }
+}
 const _onChange = {
   handleEvent(event){
     let index;
@@ -169,6 +174,7 @@ export const homeTemplate = html `
             </div>
             <input id="style-input" class="image-input" type="file" name="style-input" @change=${_onChange2}>
           </div>
+          <div class="result-wrap">
           <div class="image-item">
             <div class="image-preview" >
               <!-- <img src="" alt="Result" class="output-img"> -->
@@ -176,7 +182,10 @@ export const homeTemplate = html `
               <label for="result-input" class="preview-text not">Result</label>
             </div>
             <input class="image-input" type="file"  name="result-input" id="result-input" @change=${_onChange2}> 
-            <button @click=${_onGenerate} class="app-button" id="generate">Generate</button>
+            
+          </div>
+          <button @click=${_onGenerate} class="app-button" id="generate">Generate</button>
+          <button @click=${_onSaveRow} class="app-button" id="save">Save</button>
           </div>
         </div>
       </div>  
