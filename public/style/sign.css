@@ -87,7 +87,7 @@
 .username-box, .password-box{
     position: relative;
 }
-.fa-check, .fa-times{
+.fa-check, .fas.fa-times{
     position: absolute;
     right: 17px;
     top: 12px;
@@ -96,7 +96,7 @@
 .fa-check{
     color: green;
 }
-.fa-times{
+.fas.fa-times{
     color: red;
 }
 .fa-eye, .fa-eye-slash{

@@ -22,6 +22,9 @@ class DBManager{
     static getCatalog(username, offset, limit){
         return (Connection.db.collection('users')).find({username:username},{projection:{catalog:{$slice:[offset, limit]}}});
     }
+    static getOthers(offset, limit){
+        return (Connection.db.collection('users')).find({},{projection:{catalog:{$slice:[offset, limit]}}});
+    }
     /* Setters */
     static addUser(data){
         const newUser = {username: data.username, password: data.password, firstName: data.firstName, secondName: data.secondName, image:data.image, catalog:data.catalog};

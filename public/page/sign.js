@@ -48,7 +48,6 @@ const _onRegister = {
             alert.innerText = 'Please fill all fields';
             return;
         }
-        
         alert.innerText = '';
         fetch('/Register', {
             method: 'POST',
@@ -109,14 +108,19 @@ function debounce(username){
 }
 const _chooseLogin = {
     handleEvent(event){
+        if(document.querySelector('.login-form').style.left === "0%"){
+            return;
+        }
         changeForm();
         document.querySelector('.login-form').style.left = "0%";
         document.querySelector('.register-form').style.left = "100%";
     }
 }
-const _chooseRegister = {
-    
+const _chooseRegister = {    
     handleEvent(event){
+        if(document.querySelector('.register-form').style.left === "0%"){
+            return;
+        }
         changeForm(); 
         document.querySelector('.login-form').style.left = "-100%";
         document.querySelector('.register-form').style.left = "0%";
@@ -180,9 +184,6 @@ export const signTemplate = html`
     </div>
 </section>
 `;
-
-{/* <div class="login-background">
-</div> */}
 
 
 

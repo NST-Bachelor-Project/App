@@ -70,7 +70,7 @@ header{
     display: flex;
     align-items: center;
 }
-#login{
+#login, #other{
     /* display: block; */
     width: 120px;
     margin-right: 10px;

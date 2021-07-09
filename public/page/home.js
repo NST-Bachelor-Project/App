@@ -1,9 +1,7 @@
 import {html, render} from 'lit-html';
 
-
 const jsonTuple = {content:"", style:""};
 const tmpTuple = {content:"", style:"", result:""};
-
 const _onGenerate = {
   // handleEvent(e) { 
   //   console.log(jsonTuple);
@@ -21,17 +19,15 @@ const _onGenerate = {
   // }
   handleEvent(e) { 
     if(tmpTuple.content === "" || tmpTuple.style === ""){
-      alert('Both iamge required')
+      alert('Both Image Required');
       return;
     }
-
     fetch('/AddCatalog', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({username:localStorage.getItem('username'), catalog: tmpTuple})
     }).then((response) => response.json())
     .then((data) => {
-        console.log('VASHA');
         document.querySelector('.output-img').setAttribute('src', data.image);
         document.querySelector('.output-img').style.display = "block";
         document.querySelectorAll('.preview-text')[3].style.display = "none";
@@ -64,7 +60,6 @@ const _onChange = {
     image.style.display = "block";
     reader.addEventListener("load", (event) => {
         image.setAttribute('src', event.target.result);
-        console.log(event.target.result);
         if(index == 0){
             jsonTuple.content = event.target.result.substring(22);
             tmpTuple.content = event.target.result;
@@ -115,33 +110,6 @@ const _onChange2 = {
   }
 }
 
-// for(let i = 0; i < imageInputs.length; i++){
-//     imageInputs[i].addEventListener('change', (event)=>{
-//         console.log('CHANGE YES');
-//         const image = document.querySelectorAll('.input-img')[i];
-//         const previewText = document.querySelectorAll('.preview-text')[i];
-//         const file = event.target.files[0];
-//         const reader =  new FileReader(); //Read input file/image as dataURL
-//         previewText.style.display = "none";
-//         image.style.display = "block";
-//         reader.addEventListener("load", (event) => {
-            
-//             image.setAttribute('src', event.target.result);
-//             if(i == 0){
-//                 jsonTuple.content = event.target.result.substring(22);
-//                 // tmpTuple.content = event.target.result;
-//             } else if(i == 1){
-//                 jsonTuple.style = event.target.result.substring(22);
-//                 // tmpTuple.style = event.target.result;
-//             }
-//                 // } else if(i === 2){
-//             //     tmpTuple.result = event.target.result;
-
-//             // }
-//         });
-//         reader.readAsDataURL(file);
-//     });
-// }
 export const homeTemplate = html `
 <section class="welcome">
       <div class="container">
@@ -156,7 +124,6 @@ export const homeTemplate = html `
         </div>
       </div>
     </section>
-
     <section id="generation">
       <div class="container">
         <div class="image-items">
@@ -182,7 +149,6 @@ export const homeTemplate = html `
               <label for="result-input" class="preview-text not">Result</label>
             </div>
             <input class="image-input" type="file"  name="result-input" id="result-input" @change=${_onChange2}> 
-            
           </div>
           <button @click=${_onGenerate} class="app-button" id="generate">Generate</button>
           <button @click=${_onSaveRow} class="app-button" id="save">Save</button>
