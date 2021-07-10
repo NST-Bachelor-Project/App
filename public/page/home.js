@@ -1,43 +1,60 @@
+import { json } from 'body-parser';
 import {html, render} from 'lit-html';
 
 const jsonTuple = {content:"", style:""};
-const tmpTuple = {content:"", style:"", result:""};
+const saveTuple = {content:"", style:"", result:""};
 const _onGenerate = {
+  handleEvent(e) { 
+    if(jsonTuple.content === "" || jsonTuple.style === ""){
+          alert('Both Image Required');
+          return;
+        }
+        document.getElementById('generate-loader').style.visibility = 'visible';
+
+    fetch('http://34.228.52.160', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(jsonTuple)
+    }).then((response) => response.json())
+    .then((data) => {
+        console.log('VASHA');
+        document.querySelector('.output-img').setAttribute('src', data.image);
+        document.querySelector('.output-img').style.display = "block";
+        document.querySelectorAll('.preview-text')[2].style.display = "none";
+        document.getElementById('save').style.display = 'block';
+        document.getElementById('generate-loader').style.visibility = 'hidden';
+    }).catch((err) => console.log(err));
+  }
   // handleEvent(e) { 
-  //   console.log(jsonTuple);
-  //   fetch('http://3.236.55.7', {
+  //   if(tmpTuple.content === "" || tmpTuple.style === ""){
+  //     alert('Both Image Required');
+  //     return;
+  //   }
+  //   fetch('/AddCatalog', {
   //     method: 'POST',
   //     headers: {'Content-Type': 'application/json'},
-  //     body: JSON.stringify(jsonTuple)
+  //     body: JSON.stringify({username:localStorage.getItem('username'), catalog: tmpTuple})
   //   }).then((response) => response.json())
   //   .then((data) => {
-  //       console.log('VASHA');
   //       document.querySelector('.output-img').setAttribute('src', data.image);
   //       document.querySelector('.output-img').style.display = "block";
   //       document.querySelectorAll('.preview-text')[3].style.display = "none";
+  //       document.getElementById('save').style.display = 'block';
   //   }).catch((err) => console.log(err));
-  // }
-  handleEvent(e) { 
-    if(tmpTuple.content === "" || tmpTuple.style === ""){
-      alert('Both Image Required');
-      return;
-    }
-    fetch('/AddCatalog', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({username:localStorage.getItem('username'), catalog: tmpTuple})
-    }).then((response) => response.json())
-    .then((data) => {
-        document.querySelector('.output-img').setAttribute('src', data.image);
-        document.querySelector('.output-img').style.display = "block";
-        document.querySelectorAll('.preview-text')[3].style.display = "none";
-        document.getElementById('save').style.display = 'block';
-    }).catch((err) => console.log(err));
-  }   
+  // }   
 };
 const _onSaveRow = {
   handleEvent(event){
-
+    saveTuple.result = document.querySelector('.output-img').src;
+    fetch('/AddCatalog', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({username:localStorage.getItem('username'), catalog: saveTuple})
+    }).then((response) => response.json())
+    .then((data) => {
+        console.log('saved');
+    }).catch((err) => console.log(err));
+  
   }
 }
 const _onChange = {
@@ -62,10 +79,10 @@ const _onChange = {
         image.setAttribute('src', event.target.result);
         if(index == 0){
             jsonTuple.content = event.target.result.substring(22);
-            tmpTuple.content = event.target.result;
+            saveTuple.content = event.target.result;
         } else if(index == 1){
             jsonTuple.style = event.target.result.substring(22);
-            tmpTuple.style = event.target.result;
+            saveTuple.style = event.target.result;
         } 
     });
     reader.readAsDataURL(file);
@@ -132,26 +149,31 @@ export const homeTemplate = html `
               <img src="" alt="Content" class="input-img">
               <label for="content-input" class="preview-text ">Content</label>
             </div>
-            <input id="content-input" class="image-input" type="file" name="content-input" @change=${_onChange2}>
+            <input id="content-input" class="image-input" type="file" name="content-input" @change=${_onChange}>
           </div>
           <div class="image-item">
             <div class="image-preview" >
               <img src="" alt="Style" class="input-img">
               <label for="style-input" class="preview-text ">Style</label>
             </div>
-            <input id="style-input" class="image-input" type="file" name="style-input" @change=${_onChange2}>
+            <input id="style-input" class="image-input" type="file" name="style-input" @change=${_onChange}>
           </div>
           <div class="result-wrap">
           <div class="image-item">
             <div class="image-preview" >
-              <!-- <img src="" alt="Result" class="output-img"> -->
-              <img src="" alt="Result" class="input-img">
+              <img src="" alt="Result" class="output-img"> 
+              <!-- <img src="" alt="Result" class="input-img">-->
               <label for="result-input" class="preview-text not">Result</label>
             </div>
-            <input class="image-input" type="file"  name="result-input" id="result-input" @change=${_onChange2}> 
+            <input class="image-input" type="file"  name="result-input" id="result-input"> 
           </div>
-          <button @click=${_onGenerate} class="app-button" id="generate">Generate</button>
-          <button @click=${_onSaveRow} class="app-button" id="save">Save</button>
+          <div class="generate-loading-wrap">
+            <button @click=${_onGenerate} class="app-button" id="generate">Generate</button>
+            <div id="generate-loader" class="loader"></div>
+          </div>
+          <div class="generate-loading-wrap">
+            <button id="save"  class="app-button" @click=${_onSaveRow}>Save</button>
+          </div>
           </div>
         </div>
       </div>  

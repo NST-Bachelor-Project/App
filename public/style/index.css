@@ -164,6 +164,7 @@ main{
 #generate{
     width: 100px;
     margin-bottom: 15px;
+    margin-right: 10px;
 }
 #save{
     width: 100px;
@@ -180,6 +181,9 @@ main{
     animation: spin 2s linear infinite;
     visibility: hidden;
 
+  }
+  .generate-loading-wrap{
+      display: flex;
   }
   
   /* Safari */

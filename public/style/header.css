@@ -58,7 +58,7 @@ header{
     width: 5px;
   }
   .search-dropdown::-webkit-scrollbar-thumb {
-    background: white;
+    background: var(--header-background-gradient);
 }
 
 

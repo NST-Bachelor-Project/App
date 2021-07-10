@@ -86,9 +86,52 @@ export function createNewRow(newCatalog){
         row.append(content);
         row.append(style);
         row.append(result);
+        const remove = document.createElement('button');
+        remove.className = 'remove-row';
+        
+        remove.setAttribute('index', `${i + parseInt(localStorage.getItem('offset'))}`);
+        remove.innerHTML = '<i class="fas fa-trash"></i>';
+        remove.addEventListener('click', (event) => {
+            
+            let target = event.target;
+            if(target.className != 'remove-row'){
+                target = target.parentElement; 
+            }
+            if(target.disabled) return;
+            // console.log(target);
+            // console.log(target.parentNode);         
+            // console.log(target.parentNode.parentNode);
+            // console.log(target.parentNode.parentNode.children);
+            
+            const index = Array.from(target.parentNode.parentNode.children).indexOf(target.parentNode);
+
+            console.log(index);
+            
+            const username = window.location.href.split('/').pop();
+            console.log(localStorage.getItem('username') != username);
+            if(localStorage.getItem('username') != username) return;
+            document.querySelectorAll(".row")[index].style.opacity = 0.5;
+            fetch(`/DeleteRow`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({username: username, index:index})
+            }).then((response) => response.json())
+            .then((response) => {
+                
+                document.getElementById('catalog-wrap').removeChild(document.querySelectorAll(".row")[index]);
+                console.log(`removed ${index}`);
+ //               event.target.disabled = true;
+ 
+            }).catch((err) => {
+                console.error(err);
+            });  
+            
+        })
+        row.append(remove);
         document.getElementById('catalog-wrap').append(row);
     }    
 }
+
 export const editProfileTemplate = (user) => html`
 <div class="modal">
 <div class="edit-container">
@@ -203,13 +246,14 @@ const _onLoadMore = {
             body: JSON.stringify({username: username, offset:localStorage.getItem('offset'), limit:localStorage.getItem('limit')})
         }).then((response) => response.json())
         .then((data) => {
-            if(data.catalog.catalog.length < 1){
-                document.getElementById('load-more-catalog').classList.add('none');
-                document.querySelector('.loader').style.visibility = 'hidden';
-                return;
-            }
+            console.log(data.catalog.catalog);
             createNewRow(data.catalog.catalog);
             document.getElementById('profile-loader').style.visibility = 'hidden';
+            if(data.catalog.catalog.length < 1){
+                document.getElementById('load-more-catalog').classList.add('none');
+                document.getElementById('profile-loader').style.visibility = 'hidden';
+                return;
+            }
         })
         .catch((err) => {
             console.error(err);

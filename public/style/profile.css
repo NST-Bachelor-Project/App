@@ -63,6 +63,7 @@
     padding-top: 0px;
 }
 .row{
+    position: relative;
     display: flex;
     margin-bottom: 15px;
     width: 100%;
@@ -83,6 +84,23 @@
     color:red;
     display: block;
     visibility: visible;
+}
+
+.remove-row{
+    padding: 2px;
+    right: 15px;
+    top:10px;
+    width: 20px;
+    background: black;
+    
+    border:2px solid black;
+    border-radius: 50%;
+    position: absolute;
+    cursor: pointer;
+}
+.fa-trash{
+    color: white;
+    display: block;
 }
 .image-open{
     position: absolute;

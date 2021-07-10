@@ -28,7 +28,6 @@ app.listen(Config.options.port, () => {
     console.log(`Search app listening on port ${Config.options.port}!`);
 });
 app.post('/Login',  (req, res) => {
-    console.log('EEEEE');
     const username = req.body.username;
     const password = req.body.password;
     const answer = DBManager.getUser(username);
@@ -151,6 +150,12 @@ app.post('/LoadMoreCatalog', (req, res) => {
         res.json({catalog:catalog});
     
     });
+});
+app.post('/DeleteRow', (req, res) => {
+    DBManager.deleteRow(req.body.username, req.body.index);
+    console.log('2');
+    setTimeout(() => {res.json({status: 'ok'});},2000);
+    
 });
 
 

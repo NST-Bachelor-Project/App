@@ -57,5 +57,21 @@ class DBManager{
     static addAvatar(username, image){
         return (Connection.db.collection('users')).updateOne({username:username}, {$set: {image:image}});
     }   
+    static deleteRow(username, index){
+        let res = (Connection.db.collection('users')).findOne({username:username}, {fields: {catalog:1}});
+        res.then((data) => {
+            data.catalog.splice(index,1);
+            (Connection.db.collection('users')).updateOne({username:username}, {$set : {catalog : data.catalog}}, (err, res) => {
+                if(err){
+                    console.error(err);
+                    return;
+                }
+                console.log(`Removed ${index} Row from ${username}`);
+            });
+            
+        });
+       
+        
+    }
 }
 module.exports = DBManager;

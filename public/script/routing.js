@@ -6,7 +6,13 @@ const Navigo = require('navigo');
 export const router = new Navigo('/', { hash: true });
 router.on({
     '/': () => {  
-        if(localStorage.getItem('username') != 'undefined'){
+        console.log('A');
+        if(localStorage.getItem('username') == null){
+            document.getElementById('login').innerText = 'Login';
+            document.getElementById('login').href = `/Sign`;
+
+        }
+        else if(localStorage.getItem('username') != 'undefined'){
             document.getElementById('login').innerText = localStorage.getItem('username');
             document.getElementById('login').href = `/Profile/${localStorage.getItem('username')}`;
             document.querySelector('.fa-sign-out-alt').style.visibility = 'visible';
@@ -23,8 +29,8 @@ router.on({
         }
         const username = localStorage.getItem('username');
         localStorage.setItem('offset', 0);
-        localStorage.setItem('limit', 4);
-        console.log('A');
+        localStorage.setItem('limit', 3);
+        
         fetch('/Profile?' + new URLSearchParams({
             username: username,
             offset: localStorage.getItem('offset'),
@@ -46,6 +52,10 @@ router.on({
                 document.querySelector('.empty-catalog').classList.add('none');
                 document.getElementById('load-more-catalog').classList.remove('none');
             }   
+            if(data.catalog.catalog.length <3){
+                document.getElementById('load-more-catalog').classList.add('none');
+            }
+            
             document.getElementById('edit-profile-btn').style.display = 'block';
             document.querySelector('.fa-sign-out-alt').style.visibility = 'visible';
             document.getElementById('login').innerText = username;            
@@ -65,12 +75,18 @@ router.on({
             render(profileTemplate(data.user), document.querySelector('main'));
             document.getElementById('catalog-wrap').innerHTML = '';
             createNewRow(data.catalog.catalog);
+            document.querySelectorAll(".remove-row").forEach((button) => {
+                button.style.display = 'none';
+            })
             if(data.catalog.catalog.length < 1){
                 document.querySelector('.empty-catalog').classList.remove('none');
                 document.getElementById('load-more-catalog').classList.add('none');
             } else{
                 document.querySelector('.empty-catalog').classList.add('none');
                 document.getElementById('load-more-catalog').classList.remove('none');
+            }
+            if(data.catalog.catalog.length < 3){
+                document.getElementById('load-more-catalog').classList.add('none');
             }
             document.getElementById('edit-profile-btn').style.display = 'none';
             if(localStorage.getItem('username') != 'undefined'){
