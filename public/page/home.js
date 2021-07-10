@@ -1,4 +1,4 @@
-import { json } from 'body-parser';
+
 import {html, render} from 'lit-html';
 
 const jsonTuple = {content:"", style:""};
@@ -45,6 +45,11 @@ const _onGenerate = {
 };
 const _onSaveRow = {
   handleEvent(event){
+    
+    if(jsonTuple.content === "" || jsonTuple.style === "" || jsonTuple.resukt === ""){
+      return;
+    }
+    console.log(" Want save");
     saveTuple.result = document.querySelector('.output-img').src;
     fetch('/AddCatalog', {
     method: 'POST',
@@ -52,7 +57,9 @@ const _onSaveRow = {
     body: JSON.stringify({username:localStorage.getItem('username'), catalog: saveTuple})
     }).then((response) => response.json())
     .then((data) => {
-        console.log('saved');
+        document.getElementById('save-check').style.visibility = 'visible';
+        document.getElementById('save').disabled = true;
+        document.getElementById('save').style.cursor = 'not-allowed';
     }).catch((err) => console.log(err));
   
   }
@@ -173,6 +180,7 @@ export const homeTemplate = html `
           </div>
           <div class="generate-loading-wrap">
             <button id="save"  class="app-button" @click=${_onSaveRow}>Save</button>
+            <i id="save-check" class="fas fa-check"></i>
           </div>
           </div>
         </div>

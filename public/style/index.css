@@ -163,13 +163,14 @@ main{
 }
 #generate{
     width: 100px;
-    margin-bottom: 15px;
-    margin-right: 10px;
 }
 #save{
     width: 100px;
-    margin-bottom: 0px;
+    margin-bottom: 0px;    
     display: none;
+}
+#save-check{
+    visibility: hidden;
 }
 .loader {
     border: 16px solid #f3f3f3;
@@ -183,7 +184,11 @@ main{
 
   }
   .generate-loading-wrap{
+      width: 150px;
+      justify-content: space-between;
       display: flex;
+      align-items: center;
+      margin-bottom: 15px;
   }
   
   /* Safari */

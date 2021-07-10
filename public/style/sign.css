@@ -87,13 +87,13 @@
 .username-box, .password-box{
     position: relative;
 }
-.fa-check, .fas.fa-times{
+#sign-check, .fas.fa-times{
     position: absolute;
     right: 17px;
     top: 12px;
     visibility: hidden;
 }
-.fa-check{
+#sign-check{
     color: green;
 }
 .fas.fa-times{

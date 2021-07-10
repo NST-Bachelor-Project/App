@@ -85,11 +85,11 @@ function validateUsername(username){
     .then((data) => {
         console.log(data.status);
         if(data.status === 'Existent'){
-            document.querySelector('.fa-check').style.visibility = 'hidden';
+            document.querySelector('#sign-check').style.visibility = 'hidden';
             document.querySelector('.fa-times').style.visibility = 'visible';
             validUsername = false;
         } else if(data.status === 'Nonexistent'){
-            document.querySelector('.fa-check').style.visibility = 'visible';
+            document.querySelector('#sign-check').style.visibility = 'visible';
             document.querySelector('.fa-times').style.visibility = 'hidden';
             validUsername = true;
         }
@@ -165,7 +165,7 @@ export const signTemplate = html`
                     <div class="register-form">
                         <div class="username-box">
                             <input @input="${_onUsernameChange}"type="text" class="sign-input" name="register-username" id="register-username" placeholder="Username" spellcheck="false"/>
-                            <i class="fas fa-check"></i>
+                            <i id="sign-check" class="fas fa-check"></i>
                             <i class="fas fa-times"></i>
                         </div>
                         <div class="password-box">
