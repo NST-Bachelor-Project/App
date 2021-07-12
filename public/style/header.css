@@ -48,6 +48,10 @@ header{
     padding: 10px;
     /* padding-left: 6px; */
 }
+.search-row-empty{
+    padding: 10px;
+    /* padding-left: 6px; */
+}
 .search-row:hover{
     background: var(--header-background-gradient);
     color: white;

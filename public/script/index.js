@@ -21,6 +21,12 @@ document.getElementById('search').addEventListener('input', (event) => {
 let timer = 0;
 const delay = 500;
 function debounce(username){
+    if(username.length < 1){
+        document.getElementById('search').placeholder = 'Search...';
+        document.getElementById('search').value = '';
+        document.querySelector('.search-dropdown').style.visibility = 'hidden';
+        return;
+    }
     if(timer){
         clearTimeout(timer);
     }
@@ -40,6 +46,11 @@ function findUser(username){
         dropdown.innerHTML = '';
         if(data.people.length === 0){
             console.log('No users found');
+            const searchRow = document.createElement('p');
+            searchRow.className = 'search-row-empty';
+            searchRow.innerText = 'No users';
+            dropdown.appendChild(searchRow);
+            dropdown.style.visibility = 'visible';
         } else {
             for(let i = 0; i < data.people.length; i++){
                 if(data.people[i].username === localStorage.getItem('username')){

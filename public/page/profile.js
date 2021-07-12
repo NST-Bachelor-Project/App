@@ -71,6 +71,7 @@ function createRowPicture(src){
     let img = document.createElement('img');
     img.setAttribute('src', src);
     img.className = 'row-picture';
+    img.alt = 'Picture';
     img.width = 256;
     img.height = 256;
     return img;
@@ -86,7 +87,7 @@ export function createNewRow(newCatalog){
         row.append(content);
         row.append(style);
         row.append(result);
-        const remove = document.createElement('button');
+        const remove = document.createElement('div');
         remove.className = 'remove-row';
         
         remove.setAttribute('index', `${i + parseInt(localStorage.getItem('offset'))}`);

@@ -144,7 +144,7 @@ export const homeTemplate = html `
             <p class="welcome-text">Neural style transfer is an optimization technique used to take two images, a content image and a style reference image (such as an artwork by a famous painter) and blend them together so the output image looks like the content image, but “painted” in the style of the style reference image.</p>
           </div>
           
-          <iframe class="welcome-video" width="600" height="350" src="https://www.youtube.com/embed/7UpK6Usjcns?autoplay=1&mute=1&loop=1&playlist=7UpK6Usjcns&controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <iframe class="welcome-video" width="600" height="350" src="https://www.youtube.com/embed/eP4faTfBlas?autoplay=1&mute=1&loop=1&playlist=eP4faTfBlas&controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
       </div>
     </section>
