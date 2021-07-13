@@ -6,44 +6,38 @@
     justify-content: space-evenly;
     align-items: center;
 }
-
 .sign-form{
-    /* padding: 30px; */
     width: 320px;
     height: 350px;
     padding-right: 20px;
     padding-left: 20px;
 }
-.sign-navigation{
-    
+.sign-navigation{   
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 30px;
 }
 .sign-title{
-    padding:5px;
-    font-size: 17px;
-    text-align: center;
     width: 100px;
     border-radius: 20px;
-    cursor: pointer;
+    font-size: 17px;
+    padding: 5px;
     border: none;
+    cursor: pointer;
     outline: none;
-    
+    text-align: center;
 }
 .chosen{
-    background-position:100px;  
-
+    background-position: 100px;  
     background: var(--button-color);
-    transition: all .5s;
     color: white;
+    transition: all .5s;
 }
 .form-changer{
     display: flex;
     position: relative;
     overflow: hidden;
-    
     height: 100%;
 }
 .login-form, .register-form{
@@ -68,22 +62,14 @@
     width: 100%;
     border-radius: 20px;
 }
-.sign-input{
-    
-}
 .login-form{
     left: 0%;
     position: absolute;
-
 }
 .register-form{
     left: 100%;
     position: absolute;
-    /* display: none; */
-
-   
 }
-
 .username-box, .password-box{
     position: relative;
 }
@@ -109,7 +95,6 @@
 .fa-eye-slash{
     display: block;
 }
-
 #sign-alert{
     margin-top: 10px;
     text-align: center;

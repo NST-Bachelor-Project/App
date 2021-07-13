@@ -1,10 +1,10 @@
 footer{
-    width: 100%;
     background: var(--footer-background-color);
+    width: 100%;
 }
 .footer-items{
-    text-align: center;
-    padding: 10px;
-    font-size: 18px;
     color:white;
+    font-size: 18px;
+    padding: 10px;
+    text-align: center;    
 }
