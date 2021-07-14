@@ -31,7 +31,6 @@ const _onLogin = {
         })
     }
 }
-
 const _onRegister = {
     handleEvent(event){
         const username = document.getElementById('register-username').value;
@@ -62,7 +61,7 @@ const _onRegister = {
         }).catch((err) => {
             console.log('Error while login');
             console.error(err);
-        })
+        });
     }
 }
 const _onUsernameChange = {
@@ -70,41 +69,6 @@ const _onUsernameChange = {
         const username = document.getElementById('register-username').value;
         debounce(username);
     }
-}
-export function validateRegistration(username, password, firstName, secondName){
-    if(username.length < 1 || password.length < 1 || firstName.length < 1 || secondName.length < 1){
-        return false;
-    }
-    return true;
-}
-let validUsername = true;
-function validateUsername(username){
-    fetch('/Register?' + new URLSearchParams({
-        username: username
-    })).then((response)=> response.json())
-    .then((data) => {
-        console.log(data.status);
-        if(data.status === 'Existent'){
-            document.querySelector('#sign-check').style.visibility = 'hidden';
-            document.querySelector('.fa-times').style.visibility = 'visible';
-            validUsername = false;
-        } else if(data.status === 'Nonexistent'){
-            document.querySelector('#sign-check').style.visibility = 'visible';
-            document.querySelector('.fa-times').style.visibility = 'hidden';
-            validUsername = true;
-        }
-    })
-    .catch((err)=> console.log(err))
-}
-let timer = 0;
-const delay = 1000;
-function debounce(username){
-    if(timer){
-        clearTimeout(timer);
-    }
-    timer = setTimeout(() => {
-        validateUsername(username);  
-    }, delay);
 }
 const _chooseLogin = {
     handleEvent(event){
@@ -146,6 +110,40 @@ const _hidePassword = {
         document.querySelector('.fa-eye-slash').style.display = 'block';
     }
 }
+export function validateRegistration(username, password, firstName, secondName){
+    if(username.length < 1 || password.length < 1 || firstName.length < 1 || secondName.length < 1){
+        return false;
+    }
+    return true;
+}
+let validUsername = true;
+function validateUsername(username){
+    fetch('/Register?' + new URLSearchParams({
+        username: username
+    })).then((response)=> response.json())
+    .then((data) => {
+        if(data.status === 'Existent'){
+            document.querySelector('#sign-check').style.visibility = 'hidden';
+            document.querySelector('.fa-times').style.visibility = 'visible';
+            validUsername = false;
+        } else if(data.status === 'Nonexistent'){
+            document.querySelector('#sign-check').style.visibility = 'visible';
+            document.querySelector('.fa-times').style.visibility = 'hidden';
+            validUsername = true;
+        }
+    })
+    .catch((err)=> console.log(err));
+}
+let timer = 0;
+const delay = 1000;
+function debounce(username){
+    if(timer){
+        clearTimeout(timer);
+    }
+    timer = setTimeout(() => {
+        validateUsername(username);  
+    }, delay);
+}
 export const signTemplate = html`
 <section class="login-section">
     <div class="container">
@@ -184,6 +182,3 @@ export const signTemplate = html`
     </div>
 </section>
 `;
-
-
-

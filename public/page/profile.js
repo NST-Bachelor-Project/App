@@ -1,6 +1,147 @@
 import {createMarker, html, render} from 'lit-html';
 import { validateRegistration } from './sign';
 
+function createRowPicture(src){
+    let img = document.createElement('img');
+    img.setAttribute('src', src);
+    img.className = 'row-picture';
+    img.alt = 'Picture';
+    img.width = 256;
+    img.height = 256;
+    return img;
+}
+export function createNewRow(newCatalog){
+    for(let i = 0; i < newCatalog.length; i++){
+        const current = newCatalog[i];
+        const row = document.createElement('div');
+        row.className = 'row';
+        const content = createRowPicture(current.content);
+        const style = createRowPicture(current.style);
+        const result = createRowPicture(current.result);
+        row.append(content);
+        row.append(style);
+        row.append(result);
+        const remove = document.createElement('div');
+        remove.className = 'remove-row';
+        remove.setAttribute('index', `${i + parseInt(localStorage.getItem('offset'))}`);
+        remove.innerHTML = '<i class="fas fa-trash"></i>';
+        remove.addEventListener('click', (event) => {
+            let target = event.target;
+            if(target.className != 'remove-row'){
+                target = target.parentElement; 
+            }
+            if(target.disabled) {
+                return;
+            }
+            const index = Array.from(target.parentNode.parentNode.children).indexOf(target.parentNode);
+            const username = window.location.href.split('/').pop();
+            if(localStorage.getItem('username') != username){
+                return;
+            } 
+            document.querySelectorAll(".row")[index].style.opacity = 0.5;
+            fetch(`/DeleteRow`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({username: username, index:index})
+            }).then((response) => response.json())
+            .then((response) => {
+                document.getElementById('catalog-wrap').removeChild(document.querySelectorAll(".row")[index]);
+            }).catch((err) => {
+                console.error(err);
+            });  
+        });
+        row.append(remove);
+        document.getElementById('catalog-wrap').append(row);
+    }    
+}
+window.onclick = function(event) {
+    if (event.target == document.querySelector('.modal')) {
+        document.querySelector('.modal').style.display = "none";
+    }
+}
+const _onGoEdit = {
+    handleEvent(event){
+        document.querySelector('.modal').style.display = 'block';
+        document.querySelector('.modal').style.opacity = '1';
+    }
+}
+let image = undefined;
+const _onUpload = {
+    handleEvent(event){
+        const file = event.target.files[0];
+        const reader =  new FileReader(); //Read input file/image as dataURL
+        reader.addEventListener("load", (event) => {
+            document.querySelector('.profile-picture').style.backgroundImage = `url(${event.target.result})`;
+            image = event.target.result;
+        });
+        reader.readAsDataURL(file);
+    }
+}
+const _onSave = {
+    handleEvent(event){
+        const username = localStorage.getItem('username');
+        const password = document.getElementById('edit-password').value;
+        const firstName = document.getElementById('edit-firstName').value;
+        const secondName = document.getElementById('edit-secondName').value;
+        const valid = validateRegistration("username", password, firstName, secondName);
+        if(!valid){
+            document.getElementById('edit-alert').style.visibility = 'visible';
+            return;
+        }
+        fetch(`/ProfileInfoChange`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({username: username,password:password, firstName:firstName, secondName:secondName, image:image})
+        }).then((response) => response.json())
+        .then((data) => {
+            if(data.status === 'ok'){
+                location.reload();
+            }
+        }).catch((err) => {
+            console.log('My Error');
+            console.error(err);
+        });        
+    }
+}
+const _showPassword = {
+    handleEvent(e){
+        document.getElementById('edit-password').type = 'text';
+        document.querySelector('.fa-eye').style.display = 'block';
+        document.querySelector('.fa-eye-slash').style.display = 'none';
+    }
+}
+const _hidePassword = {
+    handleEvent(e){
+        document.getElementById('edit-password').type = 'password';
+        document.querySelector('.fa-eye').style.display = 'none';
+        document.querySelector('.fa-eye-slash').style.display = 'block';
+    }
+}
+const _onLoadMore = {
+    handleEvent(e){
+        document.getElementById('profile-loader').style.visibility = 'visible';
+        let arr = window.location.href.split('/');
+        const username = arr.pop();
+        localStorage.setItem('offset', parseInt(localStorage.getItem('offset')) + parseInt(localStorage.getItem('limit')));
+        fetch('/LoadMoreCatalog', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({username: username, offset:localStorage.getItem('offset'), limit:localStorage.getItem('limit')})
+        }).then((response) => response.json())
+        .then((data) => {
+            createNewRow(data.catalog.catalog);
+            document.getElementById('profile-loader').style.visibility = 'hidden';
+            if(data.catalog.catalog.length < 1){
+                document.getElementById('load-more-catalog').classList.add('none');
+                document.getElementById('profile-loader').style.visibility = 'hidden';
+                return;
+            }
+        })
+        .catch((err) => {
+            console.error(err);
+        })
+    }
+}
 export const profileTemplate = (user) =>  html`
 <section class="profile-section">
     <div class="container">
@@ -66,73 +207,6 @@ export const profileTemplate = (user) =>  html`
     </div>
 </section>
 `;
-
-function createRowPicture(src){
-    let img = document.createElement('img');
-    img.setAttribute('src', src);
-    img.className = 'row-picture';
-    img.alt = 'Picture';
-    img.width = 256;
-    img.height = 256;
-    return img;
-}
-export function createNewRow(newCatalog){
-    for(let i = 0; i < newCatalog.length; i++){
-        const current = newCatalog[i];
-        const row = document.createElement('div');
-        row.className = 'row';
-        const content = createRowPicture(current.content);
-        const style = createRowPicture(current.style);
-        const result = createRowPicture(current.result);
-        row.append(content);
-        row.append(style);
-        row.append(result);
-        const remove = document.createElement('div');
-        remove.className = 'remove-row';
-        
-        remove.setAttribute('index', `${i + parseInt(localStorage.getItem('offset'))}`);
-        remove.innerHTML = '<i class="fas fa-trash"></i>';
-        remove.addEventListener('click', (event) => {
-            
-            let target = event.target;
-            if(target.className != 'remove-row'){
-                target = target.parentElement; 
-            }
-            if(target.disabled) return;
-            // console.log(target);
-            // console.log(target.parentNode);         
-            // console.log(target.parentNode.parentNode);
-            // console.log(target.parentNode.parentNode.children);
-            
-            const index = Array.from(target.parentNode.parentNode.children).indexOf(target.parentNode);
-
-            console.log(index);
-            
-            const username = window.location.href.split('/').pop();
-            console.log(localStorage.getItem('username') != username);
-            if(localStorage.getItem('username') != username) return;
-            document.querySelectorAll(".row")[index].style.opacity = 0.5;
-            fetch(`/DeleteRow`, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({username: username, index:index})
-            }).then((response) => response.json())
-            .then((response) => {
-                
-                document.getElementById('catalog-wrap').removeChild(document.querySelectorAll(".row")[index]);
-                console.log(`removed ${index}`);
- //               event.target.disabled = true;
- 
-            }).catch((err) => {
-                console.error(err);
-            });  
-            
-        })
-        row.append(remove);
-        document.getElementById('catalog-wrap').append(row);
-    }    
-}
-
 export const editProfileTemplate = (user) => html`
 <div class="modal">
 <div class="edit-container">
@@ -167,97 +241,4 @@ export const editProfileTemplate = (user) => html`
     <button id="save-change" class="app-button"  @click=${_onSave}>Save Changes</button>
 </div>
 </div>
-`
-
-
-
-const _onGoEdit = {
-    handleEvent(event){
-        document.querySelector('.modal').style.display = 'block';
-        document.querySelector('.modal').style.opacity = '1';
-    }
-}
-window.onclick = function(event) {
-    if (event.target == document.querySelector('.modal')) {
-        document.querySelector('.modal').style.display = "none";
-    }
-  }
-let image = undefined;
-const _onUpload = {
-    handleEvent(event){
-        const file = event.target.files[0];
-        const reader =  new FileReader(); //Read input file/image as dataURL
-        reader.addEventListener("load", (event) => {
-            document.querySelector('.profile-picture').style.backgroundImage = `url(${event.target.result})`;
-            image = event.target.result;
-        });
-        reader.readAsDataURL(file);
-    }
-}
-const _onSave = {
-    handleEvent(event){
-        const username = localStorage.getItem('username');
-        const password = document.getElementById('edit-password').value;
-        const firstName = document.getElementById('edit-firstName').value;
-        const secondName = document.getElementById('edit-secondName').value;
-        const valid = validateRegistration("username", password, firstName, secondName);
-        if(!valid){
-            document.getElementById('edit-alert').style.visibility = 'visible';
-            return;
-        }
-        fetch(`/ProfileInfoChange`, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({username: username,password:password, firstName:firstName, secondName:secondName, image:image})
-        }).then((response) => response.json())
-        .then((data) => {
-            if(data.status === 'ok'){
-                location.reload();
-            }
-        }).catch((err) => {
-            console.log('My Error');
-            console.error(err);
-        });        
-    }
-}
-
-const _showPassword = {
-    handleEvent(e){
-        document.getElementById('edit-password').type = 'text';
-        document.querySelector('.fa-eye').style.display = 'block';
-        document.querySelector('.fa-eye-slash').style.display = 'none';
-    }
-}
-const _hidePassword = {
-    handleEvent(e){
-        document.getElementById('edit-password').type = 'password';
-        document.querySelector('.fa-eye').style.display = 'none';
-        document.querySelector('.fa-eye-slash').style.display = 'block';
-    }
-}
-const _onLoadMore = {
-    handleEvent(e){
-        document.getElementById('profile-loader').style.visibility = 'visible';
-        let arr = window.location.href.split('/');
-        const username = arr.pop();
-        localStorage.setItem('offset', parseInt(localStorage.getItem('offset')) + parseInt(localStorage.getItem('limit')));
-        fetch('/LoadMoreCatalog', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({username: username, offset:localStorage.getItem('offset'), limit:localStorage.getItem('limit')})
-        }).then((response) => response.json())
-        .then((data) => {
-            console.log(data.catalog.catalog);
-            createNewRow(data.catalog.catalog);
-            document.getElementById('profile-loader').style.visibility = 'hidden';
-            if(data.catalog.catalog.length < 1){
-                document.getElementById('load-more-catalog').classList.add('none');
-                document.getElementById('profile-loader').style.visibility = 'hidden';
-                return;
-            }
-        })
-        .catch((err) => {
-            console.error(err);
-        })
-    }
-}
+`;
