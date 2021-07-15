@@ -21,6 +21,10 @@ router.on({
         render(signTemplate, document.querySelector('main'));
     },
     '/Profile/:username': (params) => {
+        if(localStorage.getItem('username') == null || localStorage.getItem('username') === 'undefined'){
+            document.getElementById('login').innerText = 'Login';
+            document.getElementById('login').href = `/Sign`;
+        }
         if(localStorage.getItem('username') != params.data.username){
             router.navigate('/');
             return;
@@ -61,6 +65,10 @@ router.on({
         }).catch((err) => console.error(err))
     },
     '/Visit/:username': (params) => {
+        if(localStorage.getItem('username') == null || localStorage.getItem('username') === 'undefined'){    
+            document.getElementById('login').innerText = 'Login';
+            document.getElementById('login').href = `/Sign`;
+        }
         localStorage.setItem('offset', 0);
         const username = params.data.username;
         fetch('/Profile?' + new URLSearchParams({
@@ -89,7 +97,7 @@ router.on({
             }
             document.getElementById('edit-profile-btn').style.display = 'none';
             document.getElementById('delete-account').style.display = 'none'; 
-            if(localStorage.getItem('username') != 'undefined'){
+            if(localStorage.getItem('username') != null && localStorage.getItem('username') != 'undefined'){
                 document.getElementById('login').innerText = localStorage.getItem('username');
                 document.getElementById('login').href = `/Profile/${localStorage.getItem('username')}`;
                 document.querySelector('.fa-sign-out-alt').style.visibility = 'visible';

@@ -25,25 +25,25 @@ const _onGenerate = {
   //       document.getElementById('generate-loader').style.visibility = 'hidden';
   //   }).catch((err) => console.log(err));
   // }
-  handleEvent(e) { 
-    console.log('111');
-    if(saveTuple.content === "" || saveTuple.style === ""){
-      alert('Both Image Required');
-      return;
-    }
-    fetch('/AddCatalog', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({username:localStorage.getItem('username'), catalog: saveTuple})
-    }).then((response) => response.json())
-    .then((data) => {
-      console.log('222');
-        document.querySelector('.output-img').setAttribute('src', data.image);
-        document.querySelector('.output-img').style.display = "block";
-        document.querySelectorAll('.preview-text')[3].style.display = "none";
-        document.getElementById('save').style.display = 'block';
-    }).catch((err) => console.log(err));
-  }   
+  // handleEvent(e) { 
+  //   console.log('111');
+  //   if(saveTuple.content === "" || saveTuple.style === ""){
+  //     alert('Both Image Required');
+  //     return;
+  //   }
+  //   fetch('/AddCatalog', {
+  //     method: 'POST',
+  //     headers: {'Content-Type': 'application/json'},
+  //     body: JSON.stringify({username:localStorage.getItem('username'), catalog: saveTuple})
+  //   }).then((response) => response.json())
+  //   .then((data) => {
+  //     console.log('222');
+  //       document.querySelector('.output-img').setAttribute('src', data.image);
+  //       document.querySelector('.output-img').style.display = "block";
+  //       document.querySelectorAll('.preview-text')[3].style.display = "none";
+  //       document.getElementById('save').style.display = 'block';
+  //   }).catch((err) => console.log(err));
+  // }   
 };
 const _onSaveRow = {
   handleEvent(event){
@@ -170,11 +170,11 @@ export const homeTemplate = html `
           <div class="result-wrap">
           <div class="image-item">
             <div class="image-preview" >
-            <!-- <img src="" alt="Result" class="output-img"> -->
-              <img src="" alt="Result" class="input-img">
+            <img src="" alt="Result" class="output-img"> 
+            <!-- <img src="" alt="Result" class="input-img">-->
               <label for="result-input" class="preview-text not">Result</label>
             </div>
-            <input class="image-input" type="file"  name="result-input" id="result-input" @change=${_onChange2}> 
+            <input class="image-input" type="file"  name="result-input" id="result-input"> 
           </div>
           <div class="generate-loading-wrap">
             <button @click=${_onGenerate} class="app-button" id="generate">Generate</button>
