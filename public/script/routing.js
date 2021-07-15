@@ -87,6 +87,7 @@ router.on({
                 document.getElementById('load-more-catalog').classList.add('none');
             }
             document.getElementById('edit-profile-btn').style.display = 'none';
+            document.getElementById('delete-account').style.display = 'none'; 
             if(localStorage.getItem('username') != 'undefined'){
                 document.getElementById('login').innerText = localStorage.getItem('username');
                 document.getElementById('login').href = `/Profile/${localStorage.getItem('username')}`;
