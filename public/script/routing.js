@@ -6,11 +6,9 @@ const Navigo = require('navigo');
 export const router = new Navigo('/', { hash: true });
 router.on({
     '/': () => {  
-        console.log('A');
-        if(localStorage.getItem('username') == null){
+        if(localStorage.getItem('username') == null || localStorage.getItem('username') === 'undefined'){
             document.getElementById('login').innerText = 'Login';
             document.getElementById('login').href = `/Sign`;
-
         }
         else if(localStorage.getItem('username') != 'undefined'){
             document.getElementById('login').innerText = localStorage.getItem('username');

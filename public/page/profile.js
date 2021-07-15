@@ -1,4 +1,5 @@
 import {createMarker, html, render} from 'lit-html';
+import { router } from '../script/routing';
 import { validateRegistration } from './sign';
 
 function createRowPicture(src){
@@ -142,6 +143,29 @@ const _onLoadMore = {
         })
     }
 }
+const _onDeleteAccount = {
+    handleEvent(event){
+        const username = window.location.href.split('/').pop();
+        if(localStorage.getItem('username') != username){
+            return;
+        } 
+        let answer = confirm("You are going to delete account");
+        if(answer){
+            fetch('/DeleteAccount', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({username: username})
+            }).then((response) => response.json())
+            .then((data) => {
+                localStorage.setItem('username', undefined);
+                router.navigate('/');
+            })
+            .catch((err) => {
+                console.error(err);
+            })
+        }
+    }
+}
 export const profileTemplate = (user) =>  html`
 <section class="profile-section">
     <div class="container">
@@ -158,6 +182,7 @@ export const profileTemplate = (user) =>  html`
                         <p>${user.secondName}</p>
                     </div>
                     <button id="edit-profile-btn" class="app-button" @click=${_onGoEdit}>Edit Profile</button>
+                    <button id="delete-account" class="app-button"  @click=${_onDeleteAccount}>Delete Account</button>
                 </div>
             </div>
             <div class="profile-item">
@@ -207,38 +232,38 @@ export const profileTemplate = (user) =>  html`
     </div>
 </section>
 `;
-export const editProfileTemplate = (user) => html`
-<div class="modal">
-<div class="edit-container">
-    <div class="edit-row">
-        <p class="edit-field-title">Avatar</p>
-        <input @change=${_onUpload} class="edit-input" type="file" name="avatar-input" id="avatar-input">
-    </div>
+// export const editProfileTemplate = (user) => html`
+// <div class="modal">
+// <div class="edit-container">
+//     <div class="edit-row">
+//         <p class="edit-field-title">Avatar</p>
+//         <input @change=${_onUpload} class="edit-input" type="file" name="avatar-input" id="avatar-input">
+//     </div>
     
-    <div class="edit-row">
-        <p class="edit-field-title">Username</p>
-        <input type="text" id="edit-username" class="edit-input" value="${user.username}" 
-            onfocus="this.placeholder=''" onblur="this.placeholder='${user.username}'" disabled/>
-    </div>
-    <div class="edit-row edit-password">
-        <p class="edit-field-title">Password</p>
-        <input type="password" id="edit-password" class="edit-input" value="${user.password}"
-            onfocus="this.placeholder=''" onblur="this.placeholder='${user.password}'"/>
-        <i @click=${_hidePassword} class="fas fa-eye"></i>
-        <i @click=${_showPassword} class="fas fa-eye-slash"></i>
-    </div>
-    <div class="edit-row">
-        <p class="edit-field-title">First Name</p>
-        <input type="text" id="edit-firstName" class="edit-input" value="${user.firstName}"
-            onfocus="this.placeholder=''" onblur="this.placeholder='${user.firstName}'"/>
-    </div>
-    <div class="edit-row">
-        <p class="edit-field-title">Second Name</p>
-        <input type="text" id="edit-secondName" class="edit-input" value="${user.secondName}"
-            onfocus="this.placeholder=''" onblur="this.placeholder='${user.secondName}'"/>
-    </div>
-    <p id="edit-alert">Please fill all fields</p>
-    <button id="save-change" class="app-button"  @click=${_onSave}>Save Changes</button>
-</div>
-</div>
-`;
+//     <div class="edit-row">
+//         <p class="edit-field-title">Username</p>
+//         <input type="text" id="edit-username" class="edit-input" value="${user.username}" 
+//             onfocus="this.placeholder=''" onblur="this.placeholder='${user.username}'" disabled/>
+//     </div>
+//     <div class="edit-row edit-password">
+//         <p class="edit-field-title">Password</p>
+//         <input type="password" id="edit-password" class="edit-input" value="${user.password}"
+//             onfocus="this.placeholder=''" onblur="this.placeholder='${user.password}'"/>
+//         <i @click=${_hidePassword} class="fas fa-eye"></i>
+//         <i @click=${_showPassword} class="fas fa-eye-slash"></i>
+//     </div>
+//     <div class="edit-row">
+//         <p class="edit-field-title">First Name</p>
+//         <input type="text" id="edit-firstName" class="edit-input" value="${user.firstName}"
+//             onfocus="this.placeholder=''" onblur="this.placeholder='${user.firstName}'"/>
+//     </div>
+//     <div class="edit-row">
+//         <p class="edit-field-title">Second Name</p>
+//         <input type="text" id="edit-secondName" class="edit-input" value="${user.secondName}"
+//             onfocus="this.placeholder=''" onblur="this.placeholder='${user.secondName}'"/>
+//     </div>
+//     <p id="edit-alert">Please fill all fields</p>
+//     <button id="save-change" class="app-button"  @click=${_onSave}>Save Changes</button>
+// </div>
+// </div>
+// `;

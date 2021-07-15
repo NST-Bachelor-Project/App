@@ -4,44 +4,46 @@ import {html, render} from 'lit-html';
 const jsonTuple = {content:"", style:""};
 const saveTuple = {content:"", style:"", result:""};
 const _onGenerate = {
-  handleEvent(e) { 
-    if(jsonTuple.content === "" || jsonTuple.style === ""){
-          alert('Both Image Required');
-          return;
-        }
-        document.getElementById('generate-loader').style.visibility = 'visible';
-
-    fetch('http://34.228.52.160', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(jsonTuple)
-    }).then((response) => response.json())
-    .then((data) => {
-        console.log('VASHA');
-        document.querySelector('.output-img').setAttribute('src', data.image);
-        document.querySelector('.output-img').style.display = "block";
-        document.querySelectorAll('.preview-text')[2].style.display = "none";
-        document.getElementById('save').style.display = 'block';
-        document.getElementById('generate-loader').style.visibility = 'hidden';
-    }).catch((err) => console.log(err));
-  }
   // handleEvent(e) { 
-  //   if(tmpTuple.content === "" || tmpTuple.style === ""){
-  //     alert('Both Image Required');
-  //     return;
-  //   }
-  //   fetch('/AddCatalog', {
+  //   if(jsonTuple.content === "" || jsonTuple.style === ""){
+  //         alert('Both Image Required');
+  //         return;
+  //       }
+  //       document.getElementById('generate-loader').style.visibility = 'visible';
+
+  //   fetch('http://34.228.52.160', {
   //     method: 'POST',
   //     headers: {'Content-Type': 'application/json'},
-  //     body: JSON.stringify({username:localStorage.getItem('username'), catalog: tmpTuple})
+  //     body: JSON.stringify(jsonTuple)
   //   }).then((response) => response.json())
   //   .then((data) => {
+  //       console.log('VASHA');
   //       document.querySelector('.output-img').setAttribute('src', data.image);
   //       document.querySelector('.output-img').style.display = "block";
-  //       document.querySelectorAll('.preview-text')[3].style.display = "none";
+  //       document.querySelectorAll('.preview-text')[2].style.display = "none";
   //       document.getElementById('save').style.display = 'block';
+  //       document.getElementById('generate-loader').style.visibility = 'hidden';
   //   }).catch((err) => console.log(err));
-  // }   
+  // }
+  handleEvent(e) { 
+    console.log('111');
+    if(saveTuple.content === "" || saveTuple.style === ""){
+      alert('Both Image Required');
+      return;
+    }
+    fetch('/AddCatalog', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({username:localStorage.getItem('username'), catalog: saveTuple})
+    }).then((response) => response.json())
+    .then((data) => {
+      console.log('222');
+        document.querySelector('.output-img').setAttribute('src', data.image);
+        document.querySelector('.output-img').style.display = "block";
+        document.querySelectorAll('.preview-text')[3].style.display = "none";
+        document.getElementById('save').style.display = 'block';
+    }).catch((err) => console.log(err));
+  }   
 };
 const _onSaveRow = {
   handleEvent(event){
@@ -122,12 +124,12 @@ const _onChange2 = {
 
         if(index == 0){
             jsonTuple.content = event.target.result.substring(22);
-            tmpTuple.content = event.target.result;
+            saveTuple.content = event.target.result;
         } else if(index == 1){
             jsonTuple.style = event.target.result.substring(22);
-            tmpTuple.style = event.target.result;
+            saveTuple.style = event.target.result;
         } else{
-          tmpTuple.result = event.target.result;
+          saveTuple.result = event.target.result;
         }
     });
     reader.readAsDataURL(file);
@@ -156,23 +158,23 @@ export const homeTemplate = html `
               <img src="" alt="Content" class="input-img">
               <label for="content-input" class="preview-text ">Content</label>
             </div>
-            <input id="content-input" class="image-input" type="file" name="content-input" @change=${_onChange}>
+            <input id="content-input" class="image-input" type="file" name="content-input" @change=${_onChange2}>
           </div>
           <div class="image-item">
             <div class="image-preview" >
               <img src="" alt="Style" class="input-img">
               <label for="style-input" class="preview-text ">Style</label>
             </div>
-            <input id="style-input" class="image-input" type="file" name="style-input" @change=${_onChange}>
+            <input id="style-input" class="image-input" type="file" name="style-input" @change=${_onChange2}>
           </div>
           <div class="result-wrap">
           <div class="image-item">
             <div class="image-preview" >
-              <img src="" alt="Result" class="output-img"> 
-              <!-- <img src="" alt="Result" class="input-img">-->
+            <!-- <img src="" alt="Result" class="output-img"> -->
+              <img src="" alt="Result" class="input-img">
               <label for="result-input" class="preview-text not">Result</label>
             </div>
-            <input class="image-input" type="file"  name="result-input" id="result-input"> 
+            <input class="image-input" type="file"  name="result-input" id="result-input" @change=${_onChange2}> 
           </div>
           <div class="generate-loading-wrap">
             <button @click=${_onGenerate} class="app-button" id="generate">Generate</button>

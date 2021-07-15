@@ -40,5 +40,8 @@ class DBManager{
             return (Connection.db.collection('users')).updateOne({username:username}, {$set : {catalog : data.catalog}});
         });
     }
+    static deleteAccount(username){
+        return (Connection.db.collection('users')).deleteOne({username:username});
+    }
 }
 module.exports = DBManager;

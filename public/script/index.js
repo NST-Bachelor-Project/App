@@ -22,6 +22,7 @@ let timer = 0;
 const delay = 500;
 function debounce(username){
     if(username.length < 1){
+        clearTimeout(timer);
         document.getElementById('search').placeholder = 'Search...';
         document.getElementById('search').value = '';
         document.querySelector('.search-dropdown').style.visibility = 'hidden';

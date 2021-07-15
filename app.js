@@ -121,6 +121,12 @@ app.post('/DeleteRow', (req, res) => {
         res.json({status: 'ok'});
     });
 });
+app.post('/DeleteAccount', (req, res) => {
+    const answer = DBManager.deleteAccount(req.body.username);
+    answer.then((data) => {
+        res.json({status: 'ok'});
+    });
+});
 app.get('/',  (req, res) => {    
     res.sendFile(path.join(__dirname, './public', 'index.html'));
 });
