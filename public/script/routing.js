@@ -55,6 +55,7 @@ router.on({
             }
             
             document.getElementById('edit-profile-btn').style.display = 'block';
+            document.getElementById('delete-account').style.display = 'block'; 
             document.querySelector('.fa-sign-out-alt').style.visibility = 'visible';
             document.getElementById('login').innerText = username;            
         }).catch((err) => console.error(err))

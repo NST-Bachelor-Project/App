@@ -80,3 +80,9 @@ header{
 .dropdown:hover .dropdown-content {
     display: block;
 }
+
+@media only screen and (max-width: 600px) {
+    .search-container{
+        width: 100px;
+    }
+}
