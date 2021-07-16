@@ -28,6 +28,7 @@ class DBManager{
         return (Connection.db.collection('users')).updateOne({username:username}, {$set: {password:password, firstName:firstName, secondName:secondName}});
     }
     static addCatalog(username, catalog){
+        return (Connection.db.collection('users')).updateOne({username:username}, {$push: {catalog:{$each:[catalog],$position:0}}});
         return (Connection.db.collection('users')).updateOne({username:username}, {$push: {catalog:catalog}});
     }
     static addAvatar(username, image){

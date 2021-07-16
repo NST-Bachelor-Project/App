@@ -4,27 +4,31 @@ import {html, render} from 'lit-html';
 const jsonTuple = {content:"", style:""};
 const saveTuple = {content:"", style:"", result:""};
 const _onGenerate = {
-  // handleEvent(e) { 
-  //   if(jsonTuple.content === "" || jsonTuple.style === ""){
-  //         alert('Both Image Required');
-  //         return;
-  //       }
-  //       document.getElementById('generate-loader').style.visibility = 'visible';
+  handleEvent(e) { 
+    if(jsonTuple.content === "" || jsonTuple.style === ""){
+          alert('Both Image Required');
+          return;
+        }
+        document.getElementById('generate-loader').style.visibility = 'visible';
 
-  //   fetch('http://34.228.52.160', {
-  //     method: 'POST',
-  //     headers: {'Content-Type': 'application/json'},
-  //     body: JSON.stringify(jsonTuple)
-  //   }).then((response) => response.json())
-  //   .then((data) => {
-  //       console.log('VASHA');
-  //       document.querySelector('.output-img').setAttribute('src', data.image);
-  //       document.querySelector('.output-img').style.display = "block";
-  //       document.querySelectorAll('.preview-text')[2].style.display = "none";
-  //       document.getElementById('save').style.display = 'block';
-  //       document.getElementById('generate-loader').style.visibility = 'hidden';
-  //   }).catch((err) => console.log(err));
-  // }
+    fetch('http://34.238.192.225', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(jsonTuple)
+    }).then((response) => response.json())
+    .then((data) => {
+        document.querySelector('.output-img').setAttribute('src', data.image);
+        document.querySelector('.output-img').style.display = "block";
+        document.querySelectorAll('.preview-text')[2].style.display = "none";
+        document.getElementById('generate-loader').style.visibility = 'hidden';
+        document.getElementById('generate').disabled = true;
+        document.getElementById('generate').style.cursor = 'not-allowed';
+        if(localStorage.getItem('username') == null || localStorage.getItem('username')=='undefined'){
+          return;
+        }
+        document.getElementById('save').style.display = 'block';
+    }).catch((err) => console.log(err));
+  }
   // handleEvent(e) { 
   //   console.log('111');
   //   if(saveTuple.content === "" || saveTuple.style === ""){
@@ -47,11 +51,9 @@ const _onGenerate = {
 };
 const _onSaveRow = {
   handleEvent(event){
-    
     if(jsonTuple.content === "" || jsonTuple.style === "" || jsonTuple.resukt === ""){
       return;
     }
-    console.log(" Want save");
     saveTuple.result = document.querySelector('.output-img').src;
     fetch('/AddCatalog', {
     method: 'POST',
@@ -158,23 +160,23 @@ export const homeTemplate = html `
               <img src="" alt="Content" class="input-img">
               <label for="content-input" class="preview-text ">Content</label>
             </div>
-            <input id="content-input" class="image-input" type="file" name="content-input" @change=${_onChange2}>
+            <input id="content-input" class="image-input" type="file" name="content-input" @change=${_onChange}>
           </div>
           <div class="image-item">
             <div class="image-preview" >
               <img src="" alt="Style" class="input-img">
               <label for="style-input" class="preview-text ">Style</label>
             </div>
-            <input id="style-input" class="image-input" type="file" name="style-input" @change=${_onChange2}>
+            <input id="style-input" class="image-input" type="file" name="style-input" @change=${_onChange}>
           </div>
           <div class="result-wrap">
           <div class="image-item">
             <div class="image-preview" >
-            <img src="" alt="Result" class="output-img"> 
+             <img src="" alt="Result" class="output-img"> 
             <!-- <img src="" alt="Result" class="input-img">-->
               <label for="result-input" class="preview-text not">Result</label>
             </div>
-            <input class="image-input" type="file"  name="result-input" id="result-input"> 
+            <!--<input class="image-input" type="file"  name="result-input" id="result-input"> -->
           </div>
           <div class="generate-loading-wrap">
             <button @click=${_onGenerate} class="app-button" id="generate">Generate</button>

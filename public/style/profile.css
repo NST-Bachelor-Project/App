@@ -162,6 +162,10 @@
     outline: none;
     padding: 5px;
 }
+#avatar-input{
+    width: 190px;
+    padding: 2px;
+}
 .edit-password{
     position: relative;
 }
@@ -183,6 +187,7 @@
 }
 
 .load-wrap{
+    padding-left: 40px;
     margin: auto;
     display: flex;
     margin-bottom: 10px;
@@ -266,5 +271,9 @@
     }
     #edit-profile-btn, #delete-account{
         width: 130px;
+    }
+    .remove-row{
+        right: 10px;
+        top: 8px;
     }
 }

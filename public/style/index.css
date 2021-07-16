@@ -163,11 +163,12 @@ main{
     visibility: hidden;
 }
 .generate-loading-wrap{
-    width: 150px;
+    width: 200px;
     justify-content: space-between;
     display: flex;
     align-items: center;
     margin-bottom: 15px;
+    padding-left: 50px;
 }
 /* Safari */
 @-webkit-keyframes spin {
