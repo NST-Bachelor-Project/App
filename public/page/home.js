@@ -11,7 +11,7 @@ const _onGenerate = {
         }
         document.getElementById('generate-loader').style.visibility = 'visible';
 
-    fetch('http://34.238.192.225', {
+    fetch('http://3.235.164.83', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(jsonTuple)

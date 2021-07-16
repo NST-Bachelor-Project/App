@@ -82,9 +82,6 @@ router.on({
             render(profileTemplate(data.user), document.querySelector('main'));
             document.getElementById('catalog-wrap').innerHTML = '';
             createNewRow(data.catalog.catalog);
-            document.querySelectorAll(".remove-row").forEach((button) => {
-                button.style.display = 'none';
-            })
             if(data.catalog.catalog.length < 1){
                 document.querySelector('.empty-catalog').classList.remove('none');
                 document.getElementById('load-more-catalog').classList.add('none');

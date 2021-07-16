@@ -22,36 +22,39 @@ export function createNewRow(newCatalog){
         row.append(content);
         row.append(style);
         row.append(result);
-        const remove = document.createElement('div');
-        remove.className = 'remove-row';
-        remove.setAttribute('index', `${i + parseInt(localStorage.getItem('offset'))}`);
-        remove.innerHTML = '<i class="fas fa-trash"></i>';
-        remove.addEventListener('click', (event) => {
-            let target = event.target;
-            if(target.className != 'remove-row'){
-                target = target.parentElement; 
-            }
-            if(target.disabled) {
-                return;
-            }
-            const index = Array.from(target.parentNode.parentNode.children).indexOf(target.parentNode);
-            const username = window.location.href.split('/').pop();
-            if(localStorage.getItem('username') != username){
-                return;
-            } 
-            document.querySelectorAll(".row")[index].style.opacity = 0.5;
-            fetch(`/DeleteRow`, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({username: username, index:index})
-            }).then((response) => response.json())
-            .then((response) => {
-                document.getElementById('catalog-wrap').removeChild(document.querySelectorAll(".row")[index]);
-            }).catch((err) => {
-                console.error(err);
-            });  
-        });
-        row.append(remove);
+        const username = window.location.href.split('/').pop();
+        if(localStorage.getItem('username') === username){
+            const remove = document.createElement('div');
+            remove.className = 'remove-row';
+            remove.setAttribute('index', `${i + parseInt(localStorage.getItem('offset'))}`);
+            remove.innerHTML = '<i class="fas fa-trash"></i>';
+            remove.addEventListener('click', (event) => {
+                let target = event.target;
+                if(target.className != 'remove-row'){
+                    target = target.parentElement; 
+                }
+                if(target.disabled) {
+                    return;
+                }
+                const index = Array.from(target.parentNode.parentNode.children).indexOf(target.parentNode);
+                const username = window.location.href.split('/').pop();
+                if(localStorage.getItem('username') != username){
+                    return;
+                } 
+                document.querySelectorAll(".row")[index].style.opacity = 0.5;
+                fetch(`/DeleteRow`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({username: username, index:index})
+                }).then((response) => response.json())
+                .then((response) => {
+                    document.getElementById('catalog-wrap').removeChild(document.querySelectorAll(".row")[index]);
+                }).catch((err) => {
+                    console.error(err);
+                });  
+            });
+            row.append(remove);
+        }
         document.getElementById('catalog-wrap').append(row);
     }    
 }
