@@ -65,6 +65,10 @@ window.onclick = function(event) {
 }
 const _onGoEdit = {
     handleEvent(event){
+        const username = window.location.href.split('/').pop();
+        if(localStorage.getItem('username') != username){
+            return;
+        } 
         document.querySelector('.modal').style.display = 'block';
         document.querySelector('.modal').style.opacity = '1';
     }
