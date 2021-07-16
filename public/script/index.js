@@ -46,7 +46,6 @@ function findUser(username){
         const dropdown = document.querySelector('.search-dropdown');
         dropdown.innerHTML = '';
         if(data.people.length === 0){
-            console.log('No users found');
             const searchRow = document.createElement('p');
             searchRow.className = 'search-row-empty';
             searchRow.innerText = 'No users';

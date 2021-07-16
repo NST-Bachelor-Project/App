@@ -29,25 +29,6 @@ const _onGenerate = {
         document.getElementById('save').style.display = 'block';
     }).catch((err) => console.log(err));
   }
-  // handleEvent(e) { 
-  //   console.log('111');
-  //   if(saveTuple.content === "" || saveTuple.style === ""){
-  //     alert('Both Image Required');
-  //     return;
-  //   }
-  //   fetch('/AddCatalog', {
-  //     method: 'POST',
-  //     headers: {'Content-Type': 'application/json'},
-  //     body: JSON.stringify({username:localStorage.getItem('username'), catalog: saveTuple})
-  //   }).then((response) => response.json())
-  //   .then((data) => {
-  //     console.log('222');
-  //       document.querySelector('.output-img').setAttribute('src', data.image);
-  //       document.querySelector('.output-img').style.display = "block";
-  //       document.querySelectorAll('.preview-text')[3].style.display = "none";
-  //       document.getElementById('save').style.display = 'block';
-  //   }).catch((err) => console.log(err));
-  // }   
 };
 const _onSaveRow = {
   handleEvent(event){
@@ -99,45 +80,6 @@ const _onChange = {
     reader.readAsDataURL(file);
   }
 }
-const _onChange2 = {
-  handleEvent(event){
-    let index;
-    let image;
-    let previewText;
-    if(event.target.id === 'content-input'){
-        index = 0;
-        image = document.querySelectorAll('.input-img')[0];
-        previewText = document.querySelectorAll('.preview-text')[0];
-    } else if(event.target.id === 'style-input'){
-        image = document.querySelectorAll('.input-img')[1];
-        previewText = document.querySelectorAll('.preview-text')[1];
-        index = 1;
-    } else if(event.target.id === 'result-input'){
-      image = document.querySelectorAll('.input-img')[2];
-        previewText = document.querySelectorAll('.preview-text')[2];
-        index = 2;
-    }
-    const file = event.target.files[0];
-    const reader =  new FileReader(); //Read input file/image as dataURL
-    previewText.style.display = "none";
-    image.style.display = "block";
-    reader.addEventListener("load", (event) => {
-        image.setAttribute('src', event.target.result);
-
-        if(index == 0){
-            jsonTuple.content = event.target.result.substring(22);
-            saveTuple.content = event.target.result;
-        } else if(index == 1){
-            jsonTuple.style = event.target.result.substring(22);
-            saveTuple.style = event.target.result;
-        } else{
-          saveTuple.result = event.target.result;
-        }
-    });
-    reader.readAsDataURL(file);
-  }
-}
-
 export const homeTemplate = html `
 <section class="welcome">
       <div class="container">

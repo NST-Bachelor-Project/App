@@ -99,7 +99,6 @@ const _onSave = {
                 location.reload();
             }
         }).catch((err) => {
-            console.log('My Error');
             console.error(err);
         });        
     }
